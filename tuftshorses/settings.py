@@ -1,4 +1,5 @@
 # Django settings for tuftshorses project.
+import os
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -43,6 +44,8 @@ USE_L10N = True
 # If you set this to False, Django will not use timezone-aware datetimes.
 USE_TZ = True
 
+PROJECT_ROOT_PATH = os.path.dirname(os.path.abspath(__file__))
+
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
 MEDIA_ROOT = ''
@@ -64,6 +67,7 @@ STATIC_URL = '/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
+    os.path.join(PROJECT_ROOT_PATH,"static"),
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -76,6 +80,12 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
+
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+AWS_ACCESS_KEY_ID = 'AKIAJ537AK2N3U6TOO4Q'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'tuftshorses'
+STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '8wmk99)&amp;dyuh%^0gm#ad%859)@r-)b*6*-@8x=^wf)-hgurh@h'
