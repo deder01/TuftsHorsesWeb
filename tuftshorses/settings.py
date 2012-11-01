@@ -13,8 +13,8 @@ MANAGERS = ADMINS
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": "tuftshorses",
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": "tuftshorses.db",
         "USER": "",
         "PASSWORD": "",
         "HOST": "localhost",
