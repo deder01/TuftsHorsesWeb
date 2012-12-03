@@ -1,10 +1,17 @@
 from django.conf.urls import patterns, include, url
-from horseshow.api import HorseResource
+from horseshow.api import *
 from django.conf.urls.defaults import *
 from tastypie.api import Api
 
 v1_api = Api(api_name='v1')
 v1_api.register(HorseResource())
+v1_api.register(HorseShowResource())
+v1_api.register(BarnResource())
+v1_api.register(HorseShowDayResource())
+v1_api.register(RingResource())
+v1_api.register(TrainerResource())
+v1_api.register(RiderResource())
+v1_api.register(DivisionResource())
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
 # admin.autodiscover()
