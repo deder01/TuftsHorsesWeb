@@ -23,9 +23,9 @@ class HorseShowResource(ModelResource):
         resource_name = 'horseshow'
         
 class BarnResource(ModelResource):
-    owner = fields.ForeignKey('UserResource','owner')
-    riders = fields.ToManyField('UserResource','riders',full=True)
-    trainers = fields.ToManyField('UserResource','trainers',full=True)
+    owner = fields.ForeignKey(UserResource,'owner')
+    riders = fields.ToManyField(UserResource,'riders',full=True)
+    trainers = fields.ToManyField(UserResource,'trainers',full=True)
     class Meta:
         queryset = Barn.objects.all()
         resource_name = 'barn'
