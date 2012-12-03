@@ -3,6 +3,12 @@ from horseshow.models import *
 from tastypie.authorization import Authorization
 from tastypie import fields
 
+class UserResource(ModelResource):
+    class Meta:
+        queryset = User.objects.all()
+        resource_name = 'user'
+        fields = ['username', 'first_name', 'last_name', 'last_login']
+
 class HorseResource(ModelResource):
     class Meta:
         queryset = Horse.objects.all()

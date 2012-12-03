@@ -12,6 +12,7 @@ v1_api.register(RingResource())
 v1_api.register(TrainerResource())
 v1_api.register(RiderResource())
 v1_api.register(DivisionResource())
+v1_api.register(UserResource())
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
 # admin.autodiscover()
