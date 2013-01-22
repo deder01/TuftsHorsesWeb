@@ -1,0 +1,1 @@
+tufts = Barn(title='Tufts', location='Somerville, MA', owner=kschaaf, trainer=kschaaf, riders=dederl)
