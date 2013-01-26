@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>IHSA Scheduling Show</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="../../css/bootstrap.css" rel="stylesheet">
+    <link href="../../css/bootstrap-responsive.css" rel="stylesheet">
+    <style>
+
+    /* GLOBAL STYLES
+    -------------------------------------------------- */
+    /* Padding below the footer and lighter body text */
+
+    
+
+
+
+    /* CUSTOMIZE THE NAVBAR
+    -------------------------------------------------- */
+
+    /* Special class on .container surrounding .navbar, used for positioning it into place. */
+	
+  
+   
+  .dl-horizontal dt{
+    text-align: left;
+    margin-left: 20px;
+    width: 25px;
+  }
+
+
+  .dl-horizontal dd{
+    margin-left: 10px;
+  }
+  
+
+  .hero-unit{
+    color: #000000;
+    padding-left: 0;
+    background: inherit;
+  }
+	
+	.btn-large{
+		margin-top: 100px;
+		height: 100px;
+		font-size: 36pt;
+	}
+	  
+    /* Remove border and change up box shadow for more contrast */
+    .navbar .navbar-inner {
+      border: 0;
+      -webkit-box-shadow: 0 2px 10px rgba(0,0,0,.25);
+         -moz-box-shadow: 0 2px 10px rgba(0,0,0,.25);
+              box-shadow: 0 2px 10px rgba(0,0,0,.25);
+    }
+
+    /* Downsize the brand/project name a bit */
+    .navbar .brand {
+      padding: 14px 20px 16px; /* Increase vertical padding to match navbar links */
+      font-size: 16px;
+      font-weight: bold;
+      color: #ffffff;
+    }
+
+    /* Navbar links: increase padding for taller navbar */
+    .navbar .nav > li > a {
+      padding: 15px 20px;
+	    color: #ffffff;
+    }
+
+    /* Offset the responsive button for proper vertical alignment */
+    .navbar .btn-navbar {
+      margin-top: 10px;
+    }
+
+
+
+    /* RESPONSIVE CSS
+    -------------------------------------------------- */
+
+    @media (max-width: 979px) {
+
+      .navbar-wrapper {
+        margin-bottom: 0;
+      }
+
+      .carousel .item {
+        height: 500px;
+      }
+      .carousel img {
+        width: auto;
+        height: 500px;
+      }
+
+      .featurette {
+        height: auto;
+        padding: 0;
+      }
+      .featurette-image.pull-left,
+      .featurette-image.pull-right {
+        display: block;
+        float: none;
+        max-width: 40%;
+        margin: 0 auto 20px;
+      }
+    }
+
+
+    @media (max-width: 767px) {
+
+      .btn-large{
+        margin-top: 10px;
+      }
+
+      .carousel {
+        margin-left: -20px;
+        margin-right: -20px;
+      }
+      .carousel .container {
+
+      }
+      .carousel .item {
+        height: 300px;
+      }
+      .carousel img {
+        height: 300px;
+      }
+      .carousel-caption {
+        width: 65%;
+        padding: 0 70px;
+        margin-bottom: 40px;
+      }
+      .carousel-caption h1 {
+        font-size: 30px;
+      }
+      .carousel-caption .lead,
+      .carousel-caption .btn {
+        font-size: 18px;
+      }
+
+      .marketing .span4 + .span4 {
+        margin-top: 40px;
+      }
+
+      .featurette-heading {
+        font-size: 30px;
+      }
+      .featurette .lead {
+        font-size: 18px;
+        line-height: 1.5;
+      }
+
+    }
+
+
+
+    </style>
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Fav and touch icons -->
+    <link rel="shortcut icon" href="ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="ico/apple-touch-icon-57-precomposed.png">
+  </head>
+
+  <body>
+
+
+
+    <!-- NAVBAR
+    ================================================== -->
+    <!-- Wrap the .navbar in .container to center it on the page and provide easy way to target it with .navbar-wrapper. -->
+<div class="container navbar-wrapper">
+
+      <div class="navbar navbar-inverse">
+        <div class="navbar-inner">
+          <!-- Responsive Navbar Part 1: Button for triggering responsive navbar (not covered in tutorial). Include responsive CSS to utilize. -->
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../../index.html">Home</a>
+          <!-- Responsive Navbar Part 2: Place all navbar contents you want collapsed withing .navbar-collapse.collapse. -->
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li><a href="schedule.html">Detailed Schedule</a></li>
+              <li><a href="results.html">Detailed Results</a></li>
+              <!-- Read about Bootstrap dropdowns at http://twitter.github.com/bootstrap/javascript.html#dropdowns -->
+              <!-- Dropdown
+                <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">Action</a></li>
+                  <li><a href="#">Another action</a></li>
+                  <li><a href="#">Something else here</a></li>
+                  <li class="divider"></li>
+                  <li class="nav-header">Nav header</li>
+                  <li><a href="#">Separated link</a></li>
+                  <li><a href="#">One more separated link</a></li>
+                </ul>
+                </li> -->
+            </ul>
+			<form class="navbar-form pull-right">
+              <input class="span2" type="text" placeholder="Email">
+              <input class="span2" type="password" placeholder="Password">
+              <button type="submit" class="btn">Sign in</button>
+            </form>
+          </div><!--/.nav-collapse -->
+        </div><!-- /.navbar-inner -->
+      </div><!-- /.navbar -->
+    </div><!-- /.container -->
+
+
+  <div class="container" id="main">
+    <div class="row">
+        <div class="span12">
+          <h1>Tufts Horse Show</h2>
+          <h1>Verill Farm</h2>
+          <h2>11 Wheeler Rd</h2>
+          <h2>Concord, MA 01742</h2>
+            <div class="span3">
+              <h3> Current Standings </h3>
+                <table class="table table-bordered standings">
+                  <tr>
+                    <th>School</th>
+                    <th>Points (without drop)</th>
+                  </tr>
+                  <tr>
+                    <td><a href="../../teams/tufts/index.html">Tufts University</a></td>
+                    <td>24 (29)</td>
+                  </tr>
+                  <tr>
+                    <td>Stonehill University</td>
+                    <td>20 (22)</td>
+                  </tr>
+                </table>
+            </div><!-- span2 -->
+            <div class="span5">
+              <h2>Schedule</h2>
+		          <ul class="handles list">
+                <li><span>::</span><a href="7a.html">  7a Open Fences</a></li>
+                <li><span>::</span><a href="7b.html">  7b Open Fences</a></li>
+                <li><span>::</span><a href="5a.html">  5a Intermediate Flat</a></li>
+                <li><span>::</span><a href="5b.html">  5b Intermediate Flat</a></li>
+                <li><span>::</span><a href="3a.html">  3a Advanced WTC</a></li>
+		          </ul>
+              <button class="btn" type="button" style="margin-left: 80px; margin-top: 10px; ">Save</button>
+            </div> <!-- span5 -->
+            <div class="span3">
+              <h3> Last Class: </h3>
+              <h3> 3a-Advanced Walk Trot Cantor</h3>
+                <table class="table table-bordered standings">
+                  <tr>
+                    <td>1st</td>
+                    <td>123</td>
+                    <td><a href="../../teams/riders/david-eder.html">David Eder</a></td>
+                    <td><a href="../../teams/tufts/index.html">Tufts University</a></td>
+                  </tr>
+                  <tr>
+                    <td>2nd</td>
+                    <td>666</td>
+                    <td><a href="../../teams/maos/huego-chavez.html">Huego Chavez</a></td>
+                    <td><a href="../../teams/maos/index.html">Mao's School of Economics and Brutallity for Underprivlleged Youth</a></td>
+                  </tr>
+                </table>
+            </div><!-- span2 -->
+
+        </div><!-- span12 -->
+      </div><!--/row-->
+  </div>
+
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+<!-- jQuery via Google + local fallback, see h5bp.com -->
+	  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  	<script>window.jQuery || document.write('<script src="../../js/jquery-1.7.1.min.js"><\/script>')</script>
+
+<!-- Bootstrap JS: compiled and minified -->
+    <script src="../../js/bootstrap.min.js"></script>
+
+<!-- Example plugin: Prettify -->
+    <script src="../../js/prettify/prettify.js"></script>
+    
+<!-- Initialize Scripts -->
+		<script>
+			// Activate Google Prettify in this page
+			addEventListener('load', prettyPrint, false);
+		
+			$(document).ready(function(){
+
+				// Add prettyprint class to pre elements
+					$('pre').addClass('prettyprint');
+								
+			}); // end document.ready
+		</script>
+	  <script src="../../js/jquery.sortable.js"></script>
+    
+    <script>
+
+	  $(function() {
+			$('.sortable').sortable().bind('sortupdate', function(){
+				
+				
+			});
+			$('.handles').sortable({
+				handle: 'span'
+			});
+			$('.connected').sortable({
+				connectWith: '.connected'
+			});
+			$('.exclude').sortable({
+				items: ':not(.disabled)'
+			});
+		});
+		
+  </script>
+
+  </body>
+</html>
