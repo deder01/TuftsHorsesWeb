@@ -2,7 +2,8 @@
 *.pot
 *.pyc
 *~
-venv
+venv-desktop
+venv-mac
 local_settings.py
 *.db
 .DS_Store
