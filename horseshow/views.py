@@ -6,4 +6,4 @@ from django.template.context import RequestContext
 from django.contrib.auth import authenticate, login, logout
 
 def Home(request):
-  return render_to_response('index.html', context_instance=RequestContext(request, {}))
+  return render_to_response('teams/tufts/index.html', context_instance=RequestContext(request, {}))
