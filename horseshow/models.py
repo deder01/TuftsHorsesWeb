@@ -66,11 +66,11 @@ class HorseShowDay(models.Model):
         # create time slots for number of riders
         for ring in self.rings.all():
             eventLength = timedelta(minutes=ring.eventLength)
-            divisions = ring.divsions.all()
+            divisions = ring.divisions.all()
             currentTime = datetime.combine(horseShow.dateStart,
                                            self.horseShowDay.startTime)
             timeslots.append([])
-            for division in divsion:
+            for division in divisions:
                 for rider in division.riders.all():
                     timeslot = organizerTimeSlot(currentTime,
                                                  currentTime+eventLength)
