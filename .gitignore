@@ -7,3 +7,4 @@ venv-mac
 local_settings.py
 *.db
 .DS_Store
+venv

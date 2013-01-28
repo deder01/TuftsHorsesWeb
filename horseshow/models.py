@@ -15,6 +15,7 @@ DIVISION_TYPES = (
 )
 
 class HorseShow(models.Model):
+	location = models.CharField(max_length=400)
 	title = models.CharField(max_length=100)
 	dateStart = models.DateTimeField()
 	dateEnd = models.DateTimeField()
