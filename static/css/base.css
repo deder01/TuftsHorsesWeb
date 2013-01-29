@@ -1,127 +1,127 @@
-	#cont1{
-    background: rgba(255, 255, 255, .45);
-    border-bottom-right-radius: 15px;
-		border-bottom-left-radius: 15px;
-    min-height: 600px;
-    padding-bottom: 40px;
+#cont1{
+  background: rgba(255, 255, 255, .45);
+  border-bottom-right-radius: 15px;
+	border-bottom-left-radius: 15px;
+  min-height: 600px;
+  padding-bottom: 40px;
 
-	}
+}
 
-  .hero-unit{
-    color: #000000;
-    padding-left: 0;
-    background: inherit;
+.hero-unit{
+  color: #000000;
+  padding-left: 0;
+  background: inherit;
+}
+
+.btn-large{
+	margin-top: 100px;
+	height: 100px;
+	font-size: 36pt;
+}
+  
+  /* Remove border and change up box shadow for more contrast */
+  .navbar .navbar-inner {
+    border: 0;
+    -webkit-box-shadow: 0 2px 10px rgba(0,0,0,.25);
+       -moz-box-shadow: 0 2px 10px rgba(0,0,0,.25);
+            box-shadow: 0 2px 10px rgba(0,0,0,.25);
   }
-	
-	.btn-large{
-		margin-top: 100px;
-		height: 100px;
-		font-size: 36pt;
-	}
-	  
-    /* Remove border and change up box shadow for more contrast */
-    .navbar .navbar-inner {
-      border: 0;
-      -webkit-box-shadow: 0 2px 10px rgba(0,0,0,.25);
-         -moz-box-shadow: 0 2px 10px rgba(0,0,0,.25);
-              box-shadow: 0 2px 10px rgba(0,0,0,.25);
+
+  /* Downsize the brand/project name a bit */
+  .navbar .brand {
+    padding: 14px 20px 16px; /* Increase vertical padding to match navbar links */
+    font-size: 16px;
+    font-weight: bold;
+    color: #ffffff;
+  }
+
+  /* Navbar links: increase padding for taller navbar */
+  .navbar .nav > li > a {
+    padding: 15px 20px;
+    color: #ffffff;
+  }
+
+  /* Offset the responsive button for proper vertical alignment */
+  .navbar .btn-navbar {
+    margin-top: 10px;
+  }
+
+
+
+  /* RESPONSIVE CSS
+  -------------------------------------------------- */
+
+  @media (max-width: 979px) {
+
+    .navbar-wrapper {
+      margin-bottom: 0;
     }
 
-    /* Downsize the brand/project name a bit */
-    .navbar .brand {
-      padding: 14px 20px 16px; /* Increase vertical padding to match navbar links */
-      font-size: 16px;
-      font-weight: bold;
-      color: #ffffff;
+    .carousel .item {
+      height: 500px;
+    }
+    .carousel img {
+      width: auto;
+      height: 500px;
     }
 
-    /* Navbar links: increase padding for taller navbar */
-    .navbar .nav > li > a {
-      padding: 15px 20px;
-	    color: #ffffff;
+    .featurette {
+      height: auto;
+      padding: 0;
     }
+    .featurette-image.pull-left,
+    .featurette-image.pull-right {
+      display: block;
+      float: none;
+      max-width: 40%;
+      margin: 0 auto 20px;
+    }
+  }
 
-    /* Offset the responsive button for proper vertical alignment */
-    .navbar .btn-navbar {
+
+  @media (max-width: 767px) {
+
+    .btn-large{
       margin-top: 10px;
     }
 
-
-
-    /* RESPONSIVE CSS
-    -------------------------------------------------- */
-
-    @media (max-width: 979px) {
-
-      .navbar-wrapper {
-        margin-bottom: 0;
-      }
-
-      .carousel .item {
-        height: 500px;
-      }
-      .carousel img {
-        width: auto;
-        height: 500px;
-      }
-
-      .featurette {
-        height: auto;
-        padding: 0;
-      }
-      .featurette-image.pull-left,
-      .featurette-image.pull-right {
-        display: block;
-        float: none;
-        max-width: 40%;
-        margin: 0 auto 20px;
-      }
+    .carousel {
+      margin-left: -20px;
+      margin-right: -20px;
     }
-
-
-    @media (max-width: 767px) {
-
-      .btn-large{
-        margin-top: 10px;
-      }
-
-      .carousel {
-        margin-left: -20px;
-        margin-right: -20px;
-      }
-      .carousel .container {
-
-      }
-      .carousel .item {
-        height: 300px;
-      }
-      .carousel img {
-        height: 300px;
-      }
-      .carousel-caption {
-        width: 65%;
-        padding: 0 70px;
-        margin-bottom: 40px;
-      }
-      .carousel-caption h1 {
-        font-size: 30px;
-      }
-      .carousel-caption .lead,
-      .carousel-caption .btn {
-        font-size: 18px;
-      }
-
-      .marketing .span4 + .span4 {
-        margin-top: 40px;
-      }
-
-      .featurette-heading {
-        font-size: 30px;
-      }
-      .featurette .lead {
-        font-size: 18px;
-        line-height: 1.5;
-      }
+    .carousel .container {
 
     }
+    .carousel .item {
+      height: 300px;
+    }
+    .carousel img {
+      height: 300px;
+    }
+    .carousel-caption {
+      width: 65%;
+      padding: 0 70px;
+      margin-bottom: 40px;
+    }
+    .carousel-caption h1 {
+      font-size: 30px;
+    }
+    .carousel-caption .lead,
+    .carousel-caption .btn {
+      font-size: 18px;
+    }
+
+    .marketing .span4 + .span4 {
+      margin-top: 40px;
+    }
+
+    .featurette-heading {
+      font-size: 30px;
+    }
+    .featurette .lead {
+      font-size: 18px;
+      line-height: 1.5;
+    }
+
+  }
 
