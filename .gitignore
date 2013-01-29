@@ -5,7 +5,7 @@
 venv-desktop
 venv-mac
 local_settings.py
-migrations
+horseshow/migrations
 *.db
 .DS_Store
 venv
