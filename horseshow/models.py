@@ -107,11 +107,3 @@ class Division(models.Model):
     judge = models.CharField(max_length=100)
     type = models.CharField(choices=DIVISION_TYPES, max_length=20)
     riders = models.ManyToManyField(Rider)
-
-
-
-
-
-
-
-
