@@ -34,6 +34,7 @@ class Barn(models.Model):
     trainers = models.ManyToManyField(User,related_name='trainerBarn')
     riders = models.ManyToManyField(User,related_name='riderBarn')
 
+
 class Horse(models.Model):
     name = models.CharField(max_length=100)
     wins = models.IntegerField(default=0)

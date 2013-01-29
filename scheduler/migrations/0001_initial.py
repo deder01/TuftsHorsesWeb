@@ -13,6 +13,7 @@ class Migration(SchemaMigration):
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('length', self.gf('django.db.models.fields.IntegerField')()),
             ('breakLength', self.gf('django.db.models.fields.IntegerField')()),
+            ('ring', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['horseshow.Ring'], unique=True)),
         ))
         db.send_create_signal('scheduler', ['Schedule'])
 
@@ -92,6 +93,14 @@ class Migration(SchemaMigration):
             'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
+        'horseshow.division': {
+            'Meta': {'object_name': 'Division'},
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'judge': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
+            'riders': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['horseshow.Rider']", 'symmetrical': 'False'}),
+            'title': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
+            'type': ('django.db.models.fields.CharField', [], {'max_length': '20'})
+        },
         'horseshow.horse': {
             'Meta': {'object_name': 'Horse'},
             'height': ('django.db.models.fields.CharField', [], {'max_length': '5'}),
@@ -106,11 +115,19 @@ class Migration(SchemaMigration):
             'horse': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['horseshow.Horse']"}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'})
         },
+        'horseshow.ring': {
+            'Meta': {'object_name': 'Ring'},
+            'divisions': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['horseshow.Division']", 'symmetrical': 'False'}),
+            'eventLength': ('django.db.models.fields.IntegerField', [], {'default': '20'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'title': ('django.db.models.fields.CharField', [], {'max_length': '100'})
+        },
         'scheduler.schedule': {
             'Meta': {'object_name': 'Schedule'},
             'breakLength': ('django.db.models.fields.IntegerField', [], {}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'length': ('django.db.models.fields.IntegerField', [], {}),
+            'ring': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['horseshow.Ring']", 'unique': 'True'}),
             'timeSlots': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['scheduler.TimeSlot']", 'symmetrical': 'False'})
         },
         'scheduler.timeslot': {

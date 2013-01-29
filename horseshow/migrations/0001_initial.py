@@ -11,9 +11,10 @@ class Migration(SchemaMigration):
         # Adding model 'HorseShow'
         db.create_table('horseshow_horseshow', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('location', self.gf('django.db.models.fields.CharField')(max_length=400)),
             ('title', self.gf('django.db.models.fields.CharField')(max_length=100)),
-            ('dateStart', self.gf('django.db.models.fields.DateTimeField')()),
-            ('dateEnd', self.gf('django.db.models.fields.DateTimeField')()),
+            ('dateStart', self.gf('django.db.models.fields.DateField')()),
+            ('dateEnd', self.gf('django.db.models.fields.DateField')()),
             ('travelTime', self.gf('django.db.models.fields.IntegerField')()),
             ('hostingBarn', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['horseshow.Barn'])),
         ))
@@ -73,6 +74,8 @@ class Migration(SchemaMigration):
         # Adding model 'HorseShowDay'
         db.create_table('horseshow_horseshowday', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('day', self.gf('django.db.models.fields.IntegerField')(default=1)),
+            ('startTime', self.gf('django.db.models.fields.TimeField')()),
         ))
         db.send_create_signal('horseshow', ['HorseShowDay'])
 
@@ -96,6 +99,7 @@ class Migration(SchemaMigration):
         db.create_table('horseshow_ring', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('title', self.gf('django.db.models.fields.CharField')(max_length=100)),
+            ('eventLength', self.gf('django.db.models.fields.IntegerField')(default=20)),
         ))
         db.send_create_signal('horseshow', ['Ring'])
 
@@ -267,18 +271,21 @@ class Migration(SchemaMigration):
         'horseshow.horseshow': {
             'Meta': {'object_name': 'HorseShow'},
             'admin': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.User']", 'symmetrical': 'False'}),
-            'dateEnd': ('django.db.models.fields.DateTimeField', [], {}),
-            'dateStart': ('django.db.models.fields.DateTimeField', [], {}),
+            'dateEnd': ('django.db.models.fields.DateField', [], {}),
+            'dateStart': ('django.db.models.fields.DateField', [], {}),
             'horseShowDays': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['horseshow.HorseShowDay']", 'symmetrical': 'False'}),
             'hostingBarn': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['horseshow.Barn']"}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'location': ('django.db.models.fields.CharField', [], {'max_length': '400'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'travelTime': ('django.db.models.fields.IntegerField', [], {})
         },
         'horseshow.horseshowday': {
             'Meta': {'object_name': 'HorseShowDay'},
+            'day': ('django.db.models.fields.IntegerField', [], {'default': '1'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'rings': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['horseshow.Ring']", 'symmetrical': 'False'}),
+            'startTime': ('django.db.models.fields.TimeField', [], {}),
             'trainers': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['horseshow.Trainer']", 'symmetrical': 'False'})
         },
         'horseshow.rider': {
@@ -290,6 +297,7 @@ class Migration(SchemaMigration):
         'horseshow.ring': {
             'Meta': {'object_name': 'Ring'},
             'divisions': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['horseshow.Division']", 'symmetrical': 'False'}),
+            'eventLength': ('django.db.models.fields.IntegerField', [], {'default': '20'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },

@@ -5,6 +5,7 @@
 venv-desktop
 venv-mac
 local_settings.py
+migrations
 *.db
 .DS_Store
 venv
