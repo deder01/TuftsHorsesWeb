@@ -19,7 +19,8 @@ def barn(request, barnid):
 
 def show(request, showid):
   show = HorseShow.objects.all().filter(id=showid)[0]
-  showname = show.title
-  return render_to_response('shows/'+showname.lower()+'/index.hamlpy',
+  return render_to_response('shows/'+show.title.title.lower()+'/index.hamlpy',
                             context_instance=RequestContext(request, {
+                              'show':show,
+                              'teams':show.horseShowDays.barns,
                               }))

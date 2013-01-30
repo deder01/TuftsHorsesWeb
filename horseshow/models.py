@@ -51,6 +51,7 @@ class HorseShowDay(models.Model):
     day = models.IntegerField(default=1)
     rings = models.ManyToManyField('Ring')
     trainers = models.ManyToManyField('Trainer')
+    barns = models.ManyToManyField('Barn')
     startTime = models.TimeField()
 
     def organize(self):
@@ -107,15 +108,11 @@ class Trainer(models.Model):
 class Rider(models.Model):
     details = models.ForeignKey(User)
     horse = models.ForeignKey(Horse)
-
-class Competitor(models.Model):
-    rider = models.ForeignKey('Rider')
-    place = models.IntegerField(default=0)
-    points = models.IntegerField(default=0)
+    place = models.IntegerField(default=-1)
+    points = models.IntegerField(default=-1)
 
 class Division(models.Model):
     done = models.BooleanField(default=False)
     title = models.CharField(max_length=100)
     judge = models.CharField(max_length=100)
     type = models.CharField(choices=DIVISION_TYPES, max_length=20)
-    competitors = models.ManyToManyField('Competitor')
