@@ -6,9 +6,9 @@
             .span8
               .span8.team-page
                 %h2 Tufts University
-                %img.span7{:src => "static/img/teams/tufts/tufts-team.png", :style => "margin-bottom: 30px;"}
+                %img.span7{:src => "{{ STATIC_URL }}img/teams/tufts/tufts-team.png", :style => "margin-bottom: 30px;"}
                   .hero-unit
-                    %img.thumbnail.span2{:src => "static/img/first.png"}
+                    %img.thumbnail.span2{:src => "{{ STATIC_URL }}img/first.png"}
                       %h2 Recent Results
                       %ul.dl-horizontal.span4
                         %dt
@@ -25,7 +25,7 @@
             / .span8
             .span3.random-rider
               %h2 Random Rider
-              %img.thumbnail.span3{:src => "static/img/teams/tufts/roster/david-eder.jpg", :style => "margin-bottom: 15px; margin-left: 0;"}
+              %img.thumbnail.span3{:src => "{{ STATIC_URL }}img/teams/tufts/roster/david-eder.jpg", :style => "margin-bottom: 15px; margin-left: 0;"}
                 %p Name: David Eder
                 %p Major: Compute Science
                 %p Class: Novice
