@@ -27,12 +27,16 @@ class HorseShow(models.Model):
     hostingBarn = models.ForeignKey('Barn')
     horseShowDays = models.ManyToManyField('HorseShowDay')
 
+def content_file_name(instance, filename):
+  return '/'.join(['content', instance.title, filename])
+
 class Barn(models.Model):
     title = models.CharField(max_length=100)
     location = models.CharField(max_length=200)
     owner = models.ForeignKey(User,related_name='ownerBarn')
     trainers = models.ManyToManyField(User,related_name='trainerBarn')
     riders = models.ManyToManyField(User,related_name='riderBarn')
+    picture = models.ImageField(upload_to=content_file_name);
 
 
 class Horse(models.Model):
