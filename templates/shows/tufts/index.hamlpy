@@ -17,27 +17,17 @@
                 -for b in barns
                   %tr
                     %td
-                      %a{:href => "/barn/{{ b.id }}"} {{ b.title }}
+                      %a{:href => "/barn/{{ b.id }}"}= b.title
                     %td 0
             .span5
-              %h2 Schedule
-              %ul.handles.list
-                %li
-                  %span ::
-                  %a{:href => "7a.html"} 7a Open Fences
-                %li
-                  %span ::
-                  %a{:href => "7b.html"} 7b Open Fences
-                %li
-                  %span ::
-                  %a{:href => "5a.html"} 5a Intermediate Flat
-                %li
-                  %span ::
-                  %a{:href => "5b.html"} 5b Intermediate Flat
-                %li
-                  %span ::
-                  %a{:href => "3a.html"} 3a Advanced WTC
-              %button.btn{:style => "margin-left: 80px; margin-top: 10px; ", :type => "button"} Save
+              %h1 Schedule
+              -for r in rings
+                %ul.handles.list
+                  -for d in r.divisions.all
+                    %li
+                      %span ::
+                      %a{:href => "divisions/{{ d.id }}"}= d.title
+                  %button.btn{:style => "margin-lrft: 80px; margin-top: 10px; ", :type => "button"} Save
             / span5
             .span3
               %h3 Last Class:
