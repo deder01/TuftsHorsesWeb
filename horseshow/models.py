@@ -106,8 +106,10 @@ class Trainer(models.Model):
 class Rider(models.Model):
     details = models.ForeignKey(User)
     horse = models.ForeignKey(Horse)
+    place = models.IntegerField(default=0)
 
 class Division(models.Model):
+    done = models.BooleanField(default=False)
     title = models.CharField(max_length=100)
     judge = models.CharField(max_length=100)
     type = models.CharField(choices=DIVISION_TYPES, max_length=20)

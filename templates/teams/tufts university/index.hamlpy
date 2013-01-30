@@ -6,13 +6,13 @@
             .span8
               .span8.team-page
                 %h2 {{ barnname }}
-                %img.span7{:src => "../static/img/teams/{{ barnname }}/{{ barnname }}-team.png", :style => "margin-bottom: 30px;"}
+                %img.span7{:src => "../static/img/teams/{{ barnname }}/tufts-team.png", :style => "margin-bottom: 30px;"}
                   .hero-unit
                     %img.thumbnail.span2{:src => "../static/img/first.png"}
                       %h2 Recent Results
                       %ul.dl-horizontal.span4
                         %dt
-                          %a{:href => "../../shows/{{ barnname }}/index.html"} {{ barnname }}
+                          %a{:href => "../../shows/{{ barnname }}/index.html"} Tufts
                         %dd 1st
                         %dt
                           %a{:href => "../../shows/bu/index.html"} BU
