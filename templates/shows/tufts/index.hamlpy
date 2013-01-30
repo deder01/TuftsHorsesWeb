@@ -1,0 +1,85 @@
+{% extends "base.hamlpy" %}
+-block content
+  #main
+    .row
+      .span12
+        %h1
+          Tufts Horse Show
+          %h1
+            Verill Farm
+            %h2 11 Wheeler Rd
+            %h2 Concord, MA 01742
+            .span3
+              %h3 Current Standings
+              %table.table.table-bordered.standings
+                %tr
+                  %th School
+                  %th Points (without drop)
+                %tr
+                  %td
+                    %a{:href => "/barn/1"} Tufts University
+                  %td 24 (29)
+                %tr
+                  %td Stonehill University
+                  %td 20 (22)
+            / span2
+            .span5
+              %h2 Schedule
+              %ul.handles.list
+                %li
+                  %span ::
+                  %a{:href => "7a.html"} 7a Open Fences
+                %li
+                  %span ::
+                  %a{:href => "7b.html"} 7b Open Fences
+                %li
+                  %span ::
+                  %a{:href => "5a.html"} 5a Intermediate Flat
+                %li
+                  %span ::
+                  %a{:href => "5b.html"} 5b Intermediate Flat
+                %li
+                  %span ::
+                  %a{:href => "3a.html"} 3a Advanced WTC
+              %button.btn{:style => "margin-left: 80px; margin-top: 10px; ", :type => "button"} Save
+            / span5
+            .span3
+              %h3 Last Class:
+              %h3 3a-Advanced Walk Trot Cantor
+              %table.table.table-bordered.standings
+                %tr
+                  %td 1st
+                  %td 123
+                  %td
+                    %a{:href => "../../teams/riders/david-eder.html"} David Eder
+                  %td
+                    %a{:href => "../../teams/tufts/index.html"} Tufts University
+                %tr
+                  %td 2nd
+                  %td 666
+                  %td
+                    %a{:href => "../../teams/maos/huego-chavez.html"} Huego Chavez
+                  %td
+                    %a{:href => "../../teams/maos/index.html"} Mao's School of Economics and Brutallity for Underprivlleged Youth
+            / span2
+      / span12
+    / /row
+  /
+    Le javascript
+    \==================================================
+  :javascript
+      $(function() {
+        $('.sortable').sortable().bind('sortupdate', function(){
+          
+          
+        });
+        $('.handles').sortable({
+          handle: 'span'
+        });
+        $('.connected').sortable({
+          connectWith: '.connected'
+        });
+        $('.exclude').sortable({
+          items: ':not(.disabled)'
+        });
+      });
