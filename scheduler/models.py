@@ -1,11 +1,10 @@
 from django.db import models
-from horseshow.models import Rider, Ring
+from horseshow.models import Rider
 
 class Schedule(models.Model):
     length = models.IntegerField()
     breakLength = models.IntegerField()
     timeSlots = models.ManyToManyField('TimeSlot')
-    ring = models.OneToOneField(Ring)
 
 
 class TimeSlot(models.Model):
