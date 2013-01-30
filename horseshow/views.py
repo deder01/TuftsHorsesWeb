@@ -4,6 +4,24 @@ from django.http import HttpResponse
 from django.shortcuts import *
 from django.template.context import RequestContext
 from django.contrib.auth import authenticate, login, logout
+from models import *
 
-def Home(request):
-  return render_to_response('teams/tufts/index.hamlpy', context_instance=RequestContext(request, {}))
+def home(request):
+  return render_to_response('index.hamlpy', context_instance=RequestContext(request, {}))
+
+def barn(request, barnid):
+  barn = Barn.objects.all().filter(id=barnid)[0]
+  barnname = barn.title
+  return render_to_response('teams/'+barnname.lower()+'/index.hamlpy',
+                            context_instance=RequestContext(request, {
+                              'barnname':barnname,
+                              }))
+
+def show(request, showid):
+  show = HorseShow.objects.all().filter(id=showid)[0]
+  return render_to_response('shows/'+(show.title).lower()+'/index.hamlpy',
+                            context_instance=RequestContext(request, {
+                              'show':show,
+                              'barns':show.horseShowDays.all()[0].barns.all(),
+                              'rings':show.horseShowDays.all()[0].rings.all(),
+                              }))

@@ -1,0 +1,80 @@
+  <div  id="main">
+    <div class="row">
+        <div class="span12">
+          <h1>Tufts Horse Show</h2>
+          <h1>Verill Farm</h2>
+          <h2>11 Wheeler Rd</h2>
+          <h2>Concord, MA 01742</h2>
+            <div class="span3">
+              <h3> Current Standings </h3>
+                <table class="table table-bordered standings">
+                  <tr>
+                    <th>School</th>
+                    <th>Points (without drop)</th>
+                  </tr>
+                  <tr>
+                    <td><a href="../../teams/tufts/index.html">Tufts University</a></td>
+                    <td>24 (29)</td>
+                  </tr>
+                  <tr>
+                    <td>Stonehill University</td>
+                    <td>20 (22)</td>
+                  </tr>
+                </table>
+            </div><!-- span2 -->
+            <div class="span5">
+              <h2>Schedule</h2>
+		          <ul class="handles list">
+                <li><span>::</span><a href="7a.html">  7a Open Fences</a></li>
+                <li><span>::</span><a href="7b.html">  7b Open Fences</a></li>
+                <li><span>::</span><a href="5a.html">  5a Intermediate Flat</a></li>
+                <li><span>::</span><a href="5b.html">  5b Intermediate Flat</a></li>
+                <li><span>::</span><a href="3a.html">  3a Advanced WTC</a></li>
+		          </ul>
+              <button class="btn" type="button" style="margin-left: 80px; margin-top: 10px; ">Save</button>
+            </div> <!-- span5 -->
+            <div class="span3">
+              <h3> Last Class: </h3>
+              <h3> 3a-Advanced Walk Trot Cantor</h3>
+                <table class="table table-bordered standings">
+                  <tr>
+                    <td>1st</td>
+                    <td>123</td>
+                    <td><a href="../../teams/riders/david-eder.html">David Eder</a></td>
+                    <td><a href="../../teams/tufts/index.html">Tufts University</a></td>
+                  </tr>
+                  <tr>
+                    <td>2nd</td>
+                    <td>666</td>
+                    <td><a href="../../teams/maos/huego-chavez.html">Huego Chavez</a></td>
+                    <td><a href="../../teams/maos/index.html">Mao's School of Economics and Brutallity for Underprivlleged Youth</a></td>
+                  </tr>
+                </table>
+            </div><!-- span2 -->
+
+        </div><!-- span12 -->
+      </div><!--/row-->
+  </div>
+
+
+    <!-- Le javascript
+    ================================================== -->
+    <script>
+
+	  $(function() {
+			$('.sortable').sortable().bind('sortupdate', function(){
+				
+				
+			});
+			$('.handles').sortable({
+				handle: 'span'
+			});
+			$('.connected').sortable({
+				connectWith: '.connected'
+			});
+			$('.exclude').sortable({
+				items: ':not(.disabled)'
+			});
+		});
+		
+  </script>

@@ -20,32 +20,33 @@ DIVISION_TYPES = (
 class HorseShow(models.Model):
     location = models.CharField(max_length=400)
     title = models.CharField(max_length=100)
-    date = models.DateTimeField(default=datetime.now())
+    dateStart = models.DateField()
+    dateEnd = models.DateField()
+    travelTime = models.IntegerField()
     admin = models.ManyToManyField(User)
-    hostingTeam = models.ForeignKey('Team',null=True)
-    divisions = models.ManyToManyField('Division')
-    teams = models.ManyToManyField('ShowTeam')
+    hostingBarn = models.ForeignKey('Barn')
+    horseShowDays = models.ManyToManyField('HorseShowDay')
 
-class Team(models.Model):
-    school = models.CharField(max_length=100)
+class Barn(models.Model):
+    title = models.CharField(max_length=100)
     location = models.CharField(max_length=200)
-    captains = models.ManyToManyField(User,related_name='captainTeam')
-    trainers = models.ManyToManyField(User,related_name='trainerTeam')
-    riders = models.ManyToManyField(User,related_name='riderTeam')
+    owner = models.ForeignKey(User,related_name='ownerBarn')
+    trainers = models.ManyToManyField(User,related_name='trainerBarn')
+    riders = models.ManyToManyField(User,related_name='riderBarn')
 
 class Horse(models.Model):
-    name = models.CharField(max_length=100,default="")
-    height = models.CharField(max_length=5,default="")
-    weight = models.CharField(max_length=10,default="1000")
-    gender = models.CharField(max_length=20,default="gelding")
-    height_limit = models.IntegerField(default=300) #inches
-    weight_limit = models.IntegerField(default=300) #pounds
+    name = models.CharField(max_length=100)
+    wins = models.IntegerField(default=0)
+    losses = models.IntegerField(default=0)
+    height = models.CharField(max_length=5)
+    # Fill in rest later
 
-"""class HorseShowDay(models.Model):
+class HorseShowDay(models.Model):
     day = models.IntegerField(default=1)
     rings = models.ManyToManyField('Ring')
     trainers = models.ManyToManyField('Trainer')
     startTime = models.TimeField()
+    barns = models.ManyToManyField('Barn')
 
     def organize(self):
         class organizerTimeSlot(object):
@@ -92,38 +93,20 @@ class Ring(models.Model):
     title = models.CharField(max_length=100)
     divisions = models.ManyToManyField('Division')
     eventLength = models.IntegerField(default=20)
-"""
 
-class ShowTeam(models.Model):
-    team = models.ForeignKey(Team)
+class Trainer(models.Model):
+    details = models.ForeignKey(User)
+    barn = models.ForeignKey(Barn)
     riders = models.ManyToManyField('Rider')
-    trainers = models.ManyToManyField(User)
-    def points(self):
-        pass
 
 class Rider(models.Model):
     details = models.ForeignKey(User)
     horse = models.ForeignKey(Horse)
-    division = models.ForeignKey('Division',null=True)
     place = models.IntegerField(default=-1)
+    points = models.IntegerField(default=-1)
 
 class Division(models.Model):
     title = models.CharField(max_length=100)
     judge = models.CharField(max_length=100)
     type = models.CharField(choices=DIVISION_TYPES, max_length=20)
-    order = models.IntegerField(default=-1)
-    eventLength = models.IntegerField(default=10)
-    horses = models.ManyToManyField(Horse,through='Membership')
-
-class Membership(models.Model):
-    horse = models.ForeignKey(Horse)
-    division = models.ForeignKey(Division)
-    alternate = models.BooleanField(default=False)
-    able = models.BooleanField(default=True) 
-
-
-
-
-
-
-
+    riders = models.ManyToManyField(Rider)
