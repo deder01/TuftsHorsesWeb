@@ -27,18 +27,12 @@ class HorseShow(models.Model):
     hostingBarn = models.ForeignKey('Barn')
     horseShowDays = models.ManyToManyField('HorseShowDay')
 
-
-def content_file_name(instance, filename):
-  return '/'.join(['content', instance.title, filename])
-
 class Barn(models.Model):
     title = models.CharField(max_length=100)
     location = models.CharField(max_length=200)
     owner = models.ForeignKey(User,related_name='ownerBarn')
     trainers = models.ManyToManyField(User,related_name='trainerBarn')
     riders = models.ManyToManyField(User,related_name='riderBarn')
-    picture = models.ImageField(upload_to=content_file_name);
-
 
 class Horse(models.Model):
     name = models.CharField(max_length=100)
@@ -51,7 +45,6 @@ class HorseShowDay(models.Model):
     day = models.IntegerField(default=1)
     rings = models.ManyToManyField('Ring')
     trainers = models.ManyToManyField('Trainer')
-    barns = models.ManyToManyField('Barn')
     startTime = models.TimeField()
 
     def organize(self):
@@ -112,7 +105,7 @@ class Rider(models.Model):
     points = models.IntegerField(default=-1)
 
 class Division(models.Model):
-    done = models.BooleanField(default=False)
     title = models.CharField(max_length=100)
     judge = models.CharField(max_length=100)
     type = models.CharField(choices=DIVISION_TYPES, max_length=20)
+    riders = models.ManyToManyField(Rider)
