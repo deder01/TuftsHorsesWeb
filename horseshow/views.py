@@ -22,5 +22,5 @@ def show(request, showid):
   return render_to_response('shows/'+show.title.title.lower()+'/index.hamlpy',
                             context_instance=RequestContext(request, {
                               'show':show,
-                              'teams':show.horseShowDays.barns,
+                              'barns':show.horseShowDays.barns,
                               }))

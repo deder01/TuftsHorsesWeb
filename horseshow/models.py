@@ -46,6 +46,7 @@ class HorseShowDay(models.Model):
     rings = models.ManyToManyField('Ring')
     trainers = models.ManyToManyField('Trainer')
     startTime = models.TimeField()
+    barns = models.ManyToManyField('Barn')
 
     def organize(self):
         class organizerTimeSlot(object):

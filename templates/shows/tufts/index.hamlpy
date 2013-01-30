@@ -14,14 +14,11 @@
                 %tr
                   %th School
                   %th Points (without drop)
-                %tr
-                  %td
-                    %a{:href => "/barn/1"} Tufts University
-                  %td 24 (29)
-                %tr
-                  %td Stonehill University
-                  %td 20 (22)
-            / span2
+                -for b in barns
+                  %tr
+                    %td
+                      %a{:href => "/barn/{{ b.id }}"} {{ b.title }}
+                    %td 0
             .span5
               %h2 Schedule
               %ul.handles.list
