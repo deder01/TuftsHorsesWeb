@@ -93,11 +93,19 @@ class Migration(SchemaMigration):
             'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
+        'horseshow.competitor': {
+            'Meta': {'object_name': 'Competitor'},
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'place': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
+            'points': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
+            'rider': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['horseshow.Rider']"})
+        },
         'horseshow.division': {
             'Meta': {'object_name': 'Division'},
+            'competitors': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['horseshow.Competitor']", 'symmetrical': 'False'}),
+            'done': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'judge': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'riders': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['horseshow.Rider']", 'symmetrical': 'False'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'type': ('django.db.models.fields.CharField', [], {'max_length': '20'})
         },

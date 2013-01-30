@@ -42,6 +42,7 @@ class Migration(SchemaMigration):
             ('title', self.gf('django.db.models.fields.CharField')(max_length=100)),
             ('location', self.gf('django.db.models.fields.CharField')(max_length=200)),
             ('owner', self.gf('django.db.models.fields.related.ForeignKey')(related_name='ownerBarn', to=orm['auth.User'])),
+            ('picture', self.gf('django.db.models.fields.files.ImageField')(max_length=100)),
         ))
         db.send_create_signal('horseshow', ['Barn'])
 
@@ -135,22 +136,32 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal('horseshow', ['Rider'])
 
+        # Adding model 'Competitor'
+        db.create_table('horseshow_competitor', (
+            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('rider', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['horseshow.Rider'])),
+            ('place', self.gf('django.db.models.fields.IntegerField')(default=0)),
+            ('points', self.gf('django.db.models.fields.IntegerField')(default=0)),
+        ))
+        db.send_create_signal('horseshow', ['Competitor'])
+
         # Adding model 'Division'
         db.create_table('horseshow_division', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('done', self.gf('django.db.models.fields.BooleanField')(default=False)),
             ('title', self.gf('django.db.models.fields.CharField')(max_length=100)),
             ('judge', self.gf('django.db.models.fields.CharField')(max_length=100)),
             ('type', self.gf('django.db.models.fields.CharField')(max_length=20)),
         ))
         db.send_create_signal('horseshow', ['Division'])
 
-        # Adding M2M table for field riders on 'Division'
-        db.create_table('horseshow_division_riders', (
+        # Adding M2M table for field competitors on 'Division'
+        db.create_table('horseshow_division_competitors', (
             ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
             ('division', models.ForeignKey(orm['horseshow.division'], null=False)),
-            ('rider', models.ForeignKey(orm['horseshow.rider'], null=False))
+            ('competitor', models.ForeignKey(orm['horseshow.competitor'], null=False))
         ))
-        db.create_unique('horseshow_division_riders', ['division_id', 'rider_id'])
+        db.create_unique('horseshow_division_competitors', ['division_id', 'competitor_id'])
 
 
     def backwards(self, orm):
@@ -199,11 +210,14 @@ class Migration(SchemaMigration):
         # Deleting model 'Rider'
         db.delete_table('horseshow_rider')
 
+        # Deleting model 'Competitor'
+        db.delete_table('horseshow_competitor')
+
         # Deleting model 'Division'
         db.delete_table('horseshow_division')
 
-        # Removing M2M table for field riders on 'Division'
-        db.delete_table('horseshow_division_riders')
+        # Removing M2M table for field competitors on 'Division'
+        db.delete_table('horseshow_division_competitors')
 
 
     models = {
@@ -248,15 +262,24 @@ class Migration(SchemaMigration):
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'location': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
             'owner': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'ownerBarn'", 'to': "orm['auth.User']"}),
+            'picture': ('django.db.models.fields.files.ImageField', [], {'max_length': '100'}),
             'riders': ('django.db.models.fields.related.ManyToManyField', [], {'related_name': "'riderBarn'", 'symmetrical': 'False', 'to': "orm['auth.User']"}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'trainers': ('django.db.models.fields.related.ManyToManyField', [], {'related_name': "'trainerBarn'", 'symmetrical': 'False', 'to': "orm['auth.User']"})
         },
+        'horseshow.competitor': {
+            'Meta': {'object_name': 'Competitor'},
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'place': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
+            'points': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
+            'rider': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['horseshow.Rider']"})
+        },
         'horseshow.division': {
             'Meta': {'object_name': 'Division'},
+            'competitors': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['horseshow.Competitor']", 'symmetrical': 'False'}),
+            'done': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'judge': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'riders': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['horseshow.Rider']", 'symmetrical': 'False'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'type': ('django.db.models.fields.CharField', [], {'max_length': '20'})
         },

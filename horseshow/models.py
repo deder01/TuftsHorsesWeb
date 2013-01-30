@@ -27,6 +27,7 @@ class HorseShow(models.Model):
     hostingBarn = models.ForeignKey('Barn')
     horseShowDays = models.ManyToManyField('HorseShowDay')
 
+
 def content_file_name(instance, filename):
   return '/'.join(['content', instance.title, filename])
 
@@ -106,11 +107,15 @@ class Trainer(models.Model):
 class Rider(models.Model):
     details = models.ForeignKey(User)
     horse = models.ForeignKey(Horse)
+
+class Competitor(models.Model):
+    rider = models.ForeignKey('Rider')
     place = models.IntegerField(default=0)
+    points = models.IntegerField(default=0)
 
 class Division(models.Model):
     done = models.BooleanField(default=False)
     title = models.CharField(max_length=100)
     judge = models.CharField(max_length=100)
     type = models.CharField(choices=DIVISION_TYPES, max_length=20)
-    riders = models.ManyToManyField(Rider)
+    competitors = models.ManyToManyField('Competitor')
