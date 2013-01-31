@@ -19,7 +19,7 @@ v1_api.register(MembershipResource())
 urlpatterns = patterns('',
     # Examples:
     url(r'^api/',include(v1_api.urls)),
-    url(r'^$', 'horseshow.views.Home'),
+    url(r'^$', 'horseshow.views.home'),
     url(r'^static/(?P<path>.*)$', 'django.views.static.serve',
                 {'document_root':settings.STATIC_ROOT}),
     # url(r'^$', 'tuftshorses.views.home', name='home'),
