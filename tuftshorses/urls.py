@@ -6,13 +6,12 @@ from tastypie.api import Api
 v1_api = Api(api_name='v1')
 v1_api.register(HorseResource())
 v1_api.register(HorseShowResource())
-v1_api.register(BarnResource())
-v1_api.register(HorseShowDayResource())
-v1_api.register(RingResource())
-v1_api.register(TrainerResource())
 v1_api.register(RiderResource())
 v1_api.register(DivisionResource())
+v1_api.register(TeamResource()) 
 v1_api.register(UserResource())
+v1_api.register(ShowTeamResource())
+v1_api.register(MembershipResource())
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
 # admin.autodiscover()
@@ -20,9 +19,7 @@ v1_api.register(UserResource())
 urlpatterns = patterns('',
     # Examples:
     url(r'^api/',include(v1_api.urls)),
-    url(r'^$', 'horseshow.views.home'),
-    url(r'^barn/(?P<barnid>\d+)$', 'horseshow.views.barn'),
-    url(r'^show/(?P<showid>\d+)$', 'horseshow.views.show'),
+    url(r'^$', 'horseshow.views.Home'),
     url(r'^static/(?P<path>.*)$', 'django.views.static.serve',
                 {'document_root':settings.STATIC_ROOT}),
     # url(r'^$', 'tuftshorses.views.home', name='home'),
