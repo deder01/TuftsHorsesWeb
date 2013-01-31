@@ -18,6 +18,8 @@ DIVISION_TYPES = (
 )
 
 class HorseShow(models.Model):
+    lat = models.FloatField()
+    lng = models.FloatField()
     location = models.CharField(max_length=400)
     title = models.CharField(max_length=100)
     date = models.DateTimeField(default=datetime.now())
@@ -25,9 +27,12 @@ class HorseShow(models.Model):
     hostingTeam = models.ForeignKey('Team',null=True)
     divisions = models.ManyToManyField('Division')
     teams = models.ManyToManyField('ShowTeam')
+    maxriders = models.IntegerField(default=15)
 
 class Team(models.Model):
     school = models.CharField(max_length=100)
+    lat = models.FloatField()
+    lng = models.FloatField()
     location = models.CharField(max_length=200)
     captains = models.ManyToManyField(User,related_name='captainTeam')
     trainers = models.ManyToManyField(User,related_name='trainerTeam')
@@ -38,9 +43,7 @@ class Horse(models.Model):
     height = models.CharField(max_length=5,default="")
     weight = models.CharField(max_length=10,default="1000")
     gender = models.CharField(max_length=20,default="gelding")
-    height_limit = models.IntegerField(default=300) #inches
-    weight_limit = models.IntegerField(default=300) #pounds
-
+    
 """class HorseShowDay(models.Model):
     day = models.IntegerField(default=1)
     rings = models.ManyToManyField('Ring')
@@ -104,7 +107,6 @@ class ShowTeam(models.Model):
 class Rider(models.Model):
     details = models.ForeignKey(User)
     horse = models.ForeignKey(Horse)
-    division = models.ForeignKey('Division',null=True)
     place = models.IntegerField(default=-1)
     pointed = models.BooleanField(default=True)
 
@@ -115,9 +117,13 @@ class Division(models.Model):
     order = models.IntegerField(default=-1)
     eventLength = models.IntegerField(default=10)
     horses = models.ManyToManyField(Horse,through='Membership')
+    riders = models.ManyToManyField(Rider)
 
 class Membership(models.Model):
     horse = models.ForeignKey(Horse)
     division = models.ForeignKey(Division)
     alternate = models.BooleanField(default=False)
     able = models.BooleanField(default=True) 
+    height_limit = models.IntegerField(default=300) #inches
+    weight_limit = models.IntegerField(default=300) #pounds
+
