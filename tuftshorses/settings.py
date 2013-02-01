@@ -121,7 +121,6 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'gunicorn',
     'horseshow',
-    'scheduler',
     'tastypie',
     'south',
     # Uncomment the next line to enable the admin:

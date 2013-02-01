@@ -29,6 +29,16 @@ class HorseShow(models.Model):
     teams = models.ManyToManyField('ShowTeam')
     maxriders = models.IntegerField(default=15)
 
+class Zone(models.Model):
+    title = models.CharField(max_length=100)
+    regions = models.ManyToManyField('Region')
+    admin = models.ManyToManyField(User)
+
+class Region(models.Model):
+    title = models.CharField(max_length=100)
+    teams = models.ManyToManyField('Team')
+    admin = models.ManyToManyField(User)
+
 class Team(models.Model):
     school = models.CharField(max_length=100)
     lat = models.FloatField()
@@ -44,6 +54,36 @@ class Horse(models.Model):
     weight = models.CharField(max_length=10,default="1000")
     gender = models.CharField(max_length=20,default="gelding")
     
+class ShowTeam(models.Model):
+    team = models.ForeignKey(Team)
+    riders = models.ManyToManyField('Rider')
+    trainers = models.ManyToManyField(User)
+    def points(self):
+        pass
+
+class Rider(models.Model):
+    details = models.ForeignKey(User)
+    horse = models.ForeignKey(Horse)
+    place = models.IntegerField(default=-1)
+    pointed = models.BooleanField(default=True)
+
+class Division(models.Model):
+    title = models.CharField(max_length=100)
+    judge = models.CharField(max_length=100)
+    type = models.CharField(choices=DIVISION_TYPES, max_length=20)
+    order = models.IntegerField(default=-1)
+    eventLength = models.IntegerField(default=10)
+    horses = models.ManyToManyField(Horse,through='Membership')
+    riders = models.ManyToManyField(Rider)
+
+class Membership(models.Model):
+    horse = models.ForeignKey(Horse)
+    division = models.ForeignKey(Division)
+    alternate = models.BooleanField(default=False)
+    able = models.BooleanField(default=True) 
+    height_limit = models.IntegerField(default=300) #inches
+    weight_limit = models.IntegerField(default=300) #pounds
+
 """class HorseShowDay(models.Model):
     day = models.IntegerField(default=1)
     rings = models.ManyToManyField('Ring')
@@ -97,33 +137,4 @@ class Ring(models.Model):
     eventLength = models.IntegerField(default=20)
 """
 
-class ShowTeam(models.Model):
-    team = models.ForeignKey(Team)
-    riders = models.ManyToManyField('Rider')
-    trainers = models.ManyToManyField(User)
-    def points(self):
-        pass
-
-class Rider(models.Model):
-    details = models.ForeignKey(User)
-    horse = models.ForeignKey(Horse)
-    place = models.IntegerField(default=-1)
-    pointed = models.BooleanField(default=True)
-
-class Division(models.Model):
-    title = models.CharField(max_length=100)
-    judge = models.CharField(max_length=100)
-    type = models.CharField(choices=DIVISION_TYPES, max_length=20)
-    order = models.IntegerField(default=-1)
-    eventLength = models.IntegerField(default=10)
-    horses = models.ManyToManyField(Horse,through='Membership')
-    riders = models.ManyToManyField(Rider)
-
-class Membership(models.Model):
-    horse = models.ForeignKey(Horse)
-    division = models.ForeignKey(Division)
-    alternate = models.BooleanField(default=False)
-    able = models.BooleanField(default=True) 
-    height_limit = models.IntegerField(default=300) #inches
-    weight_limit = models.IntegerField(default=300) #pounds
 
