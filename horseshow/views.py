@@ -9,12 +9,12 @@ from models import *
 def home(request):
   return render_to_response('index.hamlpy', context_instance=RequestContext(request, {}))
 
-def barn(request, barnid):
-  barn = Barn.objects.all().filter(id=barnid)[0]
-  barnname = barn.title
-  return render_to_response('teams/'+barnname.lower()+'/index.hamlpy',
+def team(request, teamid):
+  team = Team.objects.all().filter(id=teamid)[0]
+  teamname = team.title
+  return render_to_response('teams/'+teamname.lower()+'/index.hamlpy',
                             context_instance=RequestContext(request, {
-                              'barnname':barnname,
+                              'teamname':teamname,
                               }))
 
 def show(request, showid):
@@ -22,6 +22,4 @@ def show(request, showid):
   return render_to_response('shows/'+(show.title).lower()+'/index.hamlpy',
                             context_instance=RequestContext(request, {
                               'show':show,
-                              'barns':show.horseShowDays.all()[0].barns.all(),
-                              'rings':show.horseShowDays.all()[0].rings.all(),
                               }))

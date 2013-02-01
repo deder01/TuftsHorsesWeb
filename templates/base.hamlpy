@@ -74,15 +74,6 @@
     %script{:src => "//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"}
     :javascript
       window.jQuery || document.write('<\/script>')
-      
-      
-          
-      
-      
-          
-          
-      
-      		
       			// Activate Google Prettify in this page
       			addEventListener('load', prettyPrint, false);
       		
@@ -92,6 +83,3 @@
       					$('pre').addClass('prettyprint');
       								
       			}); // end document.ready
-      		
-      
-          <

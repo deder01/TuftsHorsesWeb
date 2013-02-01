@@ -32,12 +32,12 @@ class HorseShow(models.Model):
 class Zone(models.Model):
     title = models.CharField(max_length=100)
     regions = models.ManyToManyField('Region')
-    admin = models.ManyToManyField(User)
+    admin = models.ForeignKey(User, null=True)
 
 class Region(models.Model):
     title = models.CharField(max_length=100)
     teams = models.ManyToManyField('Team')
-    admin = models.ManyToManyField(User)
+    admin = models.ForeignKey(User, null=True)
 
 class Team(models.Model):
     school = models.CharField(max_length=100)
