@@ -20,6 +20,8 @@ urlpatterns = patterns('',
     # Examples:
     url(r'^api/',include(v1_api.urls)),
     url(r'^$', 'horseshow.views.home'),
+    url(r'^barn/(?P<barnid>\d+)$', 'horseshow.views.barn'),
+    url(r'^show/(?P<showid>\d+)$', 'horseshow.views.show'),
     url(r'^static/(?P<path>.*)$', 'django.views.static.serve',
                 {'document_root':settings.STATIC_ROOT}),
     # url(r'^$', 'tuftshorses.views.home', name='home'),
