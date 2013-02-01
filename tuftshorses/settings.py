@@ -9,18 +9,9 @@ ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )
 
-MANAGERS = ADMINS
+DATABASES = {'default': dj_database_url.config(default='postgres://localhost/tuftshorses')}
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": "tuftshorses.db",
-        "USER": "",
-        "PASSWORD": "",
-        "HOST": "localhost",
-        "PORT": "",
-    }
-}
+MANAGERS = ADMINS
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -60,14 +51,14 @@ MEDIA_URL = '/media/'
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = PROJECT_ROOT_PATH
+STATIC_ROOT = os.path.join(PROJECT_ROOT_PATH,"static/")
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
-STATIC_URL = '/static/'
+STATIC_URL = os.getenv('STATIC_URL', 'http://s3.amazonaws.com/tuftshorses/')
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-    os.path.join(PROJECT_ROOT_PATH,"static/"),
+    #os.path.join(PROJECT_ROOT_PATH,"static/"),
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -130,6 +121,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'gunicorn',
     'horseshow',
+    'scheduler',
     'tastypie',
     'south',
     # Uncomment the next line to enable the admin:
@@ -166,5 +158,3 @@ LOGGING = {
         },
     }
 }
-
-DATABASES = {'default': dj_database_url.config(default='postgres://localhost/tuftshorses')}
