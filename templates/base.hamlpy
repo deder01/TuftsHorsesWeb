@@ -32,7 +32,7 @@
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
-              %a.brand{:href => "/team/{{ team.school }}"} Team Page
+              %a.brand{:href => "/team/{{ team.id }}"}= team.school 
           .nav-collapse.collapse
             %ul.nav
               %li

@@ -40,6 +40,7 @@ class Region(models.Model):
 
 class Team(models.Model):
     school = models.CharField(max_length=100)
+    nickname = models.CharField(max_length=5)
     region = models.ForeignKey(Region, null=True)
     lat = models.FloatField()
     lng = models.FloatField()
