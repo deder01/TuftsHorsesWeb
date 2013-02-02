@@ -32,37 +32,14 @@
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
-          %a.brand{:href => "/"} Home
-          / Responsive Navbar Part 2: Place all navbar contents you want collapsed withing .navbar-collapse.collapse.
+              %a.brand{:href => "/team/{{ team.school }}"} Team Page
           .nav-collapse.collapse
             %ul.nav
               %li
                 %a{:href => "roster.html"} Roster
               %li
                 %a{:href => "results.html"} Results
-              / Read about Bootstrap dropdowns at http://twitter.github.com/bootstrap/javascript.html#dropdowns
-              /
-                Dropdown
-                <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li class="divider"></li>
-                <li class="nav-header">Nav header</li>
-                <li><a href="#">Separated link</a></li>
-                <li><a href="#">One more separated link</a></li>
-                </ul>
-                </li>
-            %form.navbar-form.pull-right
-              %input.span2{:placeholder => "Email", :type => "text"}
-                %input.span2{:placeholder => "Password", :type => "password"}
-                  %button.btn{:type => "submit"} Sign in
-          / /.nav-collapse
-        / /.navbar-inner
-      / /.navbar
-    / /.container
+
     .container
       -block content
 

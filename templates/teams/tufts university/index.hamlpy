@@ -12,7 +12,7 @@
                       %h2 Recent Results
                       %ul.dl-horizontal.span4
                         %dt
-                          %a{:href => "../../shows/{{ barnname }}/index.html"} Tufts
+                          %a{:href => "../../shows/{{ team.school }}/index.html"}= team.school
                         %dd 1st
                         %dt
                           %a{:href => "../../shows/bu/index.html"} BU
@@ -25,7 +25,7 @@
             / .span8
             .span3.random-rider
               %h2 Random Rider
-              %img.thumbnail.span3{:src => "../{{ STATIC_URL }}/img/teams/{{ barnname }}/roster/david-eder.jpg", :style => "margin-bottom: 15px; margin-left: 0;"}
+              %img.thumbnail.span3{:src => "../{{ STATIC_URL }}/img/teams/{{ team.school }}/roster/david-eder.jpg", :style => "margin-bottom: 15px; margin-left: 0;"}
                 %p Name: David Eder
                 %p Major: Compute Science
                 %p Class: Novice
@@ -35,23 +35,3 @@
         / /row
       / container
     /
-      Le javascript
-      \==================================================
-    / Placed at the end of the document so the pages load faster
-    / jQuery via Google + local fallback, see h5bp.com
-    %script{:src => "//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"}
-    :javascript
-      window.jQuery || document.write('<\/script>')
-      		
-      			// Activate Google Prettify in this page
-      			addEventListener('load', prettyPrint, false);
-      		
-      			$(document).ready(function(){
-      
-      				// Add prettyprint class to pre elements
-      					$('pre').addClass('prettyprint');
-      								
-      			}); // end document.ready
-      		
-      
-          <

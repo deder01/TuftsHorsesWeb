@@ -3,8 +3,4 @@
       #cont1
         .row
           .span12
-            .span8.hero-unit
-              %table.table.zone-table
-                %th Test1
-                %th Test1
-                %th Test1
+            %h1 Login Page

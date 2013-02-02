@@ -31,16 +31,16 @@ class HorseShow(models.Model):
 
 class Zone(models.Model):
     title = models.CharField(max_length=100)
-    regions = models.ManyToManyField('Region')
     admin = models.ForeignKey(User, null=True)
 
 class Region(models.Model):
     title = models.CharField(max_length=100)
-    teams = models.ManyToManyField('Team')
     admin = models.ForeignKey(User, null=True)
+    zone = models.ForeignKey(Zone)
 
 class Team(models.Model):
     school = models.CharField(max_length=100)
+    region = models.ForeignKey(Region)
     lat = models.FloatField()
     lng = models.FloatField()
     location = models.CharField(max_length=200)

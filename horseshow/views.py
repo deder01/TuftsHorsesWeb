@@ -11,10 +11,10 @@ def home(request):
 
 def team(request, teamid):
   team = Team.objects.all().filter(id=teamid)[0]
-  teamname = team.title
+  teamname =  team.school
   return render_to_response('teams/'+teamname.lower()+'/index.hamlpy',
                             context_instance=RequestContext(request, {
-                              'teamname':teamname,
+                              'team':team,
                               }))
 
 def show(request, showid):
