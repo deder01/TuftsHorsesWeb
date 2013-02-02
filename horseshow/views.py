@@ -22,10 +22,8 @@ def user_logout(request):
 def home(request):
   if request.user.is_authenticated() == False:
     return render_to_response('login.hamlpy', context_instance=RequestContext(request, {}))
-  team = request.user.riderTeam.all()[0]
-  return render_to_response('index.hamlpy', context_instance=RequestContext(request, {
-                                              'team':team,
-                                             }))
+  teamid = str(request.user.riderTeam.all()[0].id)
+  return HttpResponseRedirect('/team/'+teamid)
 
 def team(request, teamid):
   team = request.user.riderTeam.all()[0]
