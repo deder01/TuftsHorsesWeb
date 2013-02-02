@@ -36,11 +36,11 @@ class Zone(models.Model):
 class Region(models.Model):
     title = models.CharField(max_length=100)
     admin = models.ForeignKey(User, null=True)
-    zone = models.ForeignKey(Zone)
+    zone = models.ForeignKey(Zone, null=True)
 
 class Team(models.Model):
     school = models.CharField(max_length=100)
-    region = models.ForeignKey(Region)
+    region = models.ForeignKey(Region, null=True)
     lat = models.FloatField()
     lng = models.FloatField()
     location = models.CharField(max_length=200)
