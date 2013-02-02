@@ -36,9 +36,9 @@
           .nav-collapse.collapse
             %ul.nav
               %li
-                %a{:href => "roster.html"} Roster
+                %a{:href => "/region/{{ team.region.id }}"}= team.region.title 
               %li
-                %a{:href => "results.html"} Results
+                %a{:href => "/zone/{{ tem.region.zone.id }}"}= team.region.zone.title 
 
     .container
       -block content

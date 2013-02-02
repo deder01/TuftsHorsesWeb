@@ -7,7 +7,10 @@ from django.contrib.auth import authenticate, login, logout
 from models import *
 
 def home(request):
-  return render_to_response('index.hamlpy', context_instance=RequestContext(request, {}))
+  team = Team.objects.all().filter(id=teamid)[0]
+  return render_to_response('index.hamlpy', context_instance=RequestContext(request, {
+                                              'team':team,
+                                             }))
 
 def team(request, teamid):
   team = Team.objects.all().filter(id=teamid)[0]
