@@ -3,3 +3,8 @@
       #cont1
         .row
           .span12
+            .span4
+              %ul.showlist
+              -for s in shows
+                %li.nav 
+                  %a{:href => "/show/{{ s.id }}"}= s.title

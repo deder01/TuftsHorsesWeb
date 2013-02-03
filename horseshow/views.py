@@ -27,10 +27,12 @@ def home(request):
 
 def region(request, regionid):
   team = request.user.riderTeam.all()[0]
-  shows = 
+  region = Region.objects.all().filter(id=regionid)[0]
+  shows = region.horseshow_set.all()
   return render_to_response('region.hamlpy',
                             context_instance=RequestContext(request, {
                               'team':team,
+                              'shows':shows,
                               }))
 
 def team(request, teamid):
