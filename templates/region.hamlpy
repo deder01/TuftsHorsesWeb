@@ -1,0 +1,5 @@
+{%extends "base.hamlpy" %}
+    -block content
+      #cont1
+        .row
+          .span12

@@ -32,7 +32,7 @@
               %li
                 %a{:href => "/region/{{ team.region.id }}"}= team.region.title 
               %li
-                %a{:href => "/zone/{{ tem.region.zone.id }}"}= team.region.zone.title 
+                %a{:href => "/zone/{{ team.region.zone.id }}"}= team.region.zone.title 
           %form.navbar-form.pull-right{:action => "/logout", :method => "post"}
             {% csrf_token %}
             %button.btn{:type => "submit"} Logout

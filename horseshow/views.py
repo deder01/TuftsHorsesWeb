@@ -25,6 +25,14 @@ def home(request):
   teamid = str(request.user.riderTeam.all()[0].id)
   return HttpResponseRedirect('/team/'+teamid)
 
+def region(request, regionid):
+  team = request.user.riderTeam.all()[0]
+  shows = 
+  return render_to_response('region.hamlpy',
+                            context_instance=RequestContext(request, {
+                              'team':team,
+                              }))
+
 def team(request, teamid):
   team = request.user.riderTeam.all()[0]
   teamname = team.school.lower()
@@ -37,7 +45,7 @@ def team(request, teamid):
 def show(request, showid):
   team = Team.objects.all().filter(id=teamid)[0]
   show = HorseShow.objects.all().filter(id=showid)[0]
-  return render_to_response('shows/'+show.title.lower()+'/index.hamlpy',
+  return render_to_response('show.hamlpy',
                             context_instance=RequestContext(request, {
                               'team':team,
                               'show':show,

@@ -28,6 +28,7 @@ class HorseShow(models.Model):
     divisions = models.ManyToManyField('Division')
     teams = models.ManyToManyField('ShowTeam')
     maxriders = models.IntegerField(default=15)
+    region = models.ForeignKey('Region')
 
 class Zone(models.Model):
     title = models.CharField(max_length=100)
