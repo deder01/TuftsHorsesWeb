@@ -28,7 +28,7 @@ def home(request):
 def team(request, teamid):
   team = request.user.riderTeam.all()[0]
   teamname = team.school.lower()
-  return render_to_response('teams/'+teamname+'/index.hamlpy',
+  return render_to_response('team.hamlpy',
                             context_instance=RequestContext(request, {
                               'team':team,
                               'teamname':teamname,
