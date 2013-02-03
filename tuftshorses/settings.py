@@ -1,6 +1,12 @@
 # Django settings for tuftshorses project.
 import os
 import dj_database_url
+import middleware
+from re import compile
+
+ 
+ 
+
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -96,6 +102,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'middleware.LoginRequiredMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
@@ -157,3 +164,10 @@ LOGGING = {
         },
     }
 }
+
+LOGIN_URL = '/login/'
+
+LOGIN_EXEMPT_URLS = (
+ r'^about\.html$',
+ r'^legal/', # allow any URL under /legal/*
+)

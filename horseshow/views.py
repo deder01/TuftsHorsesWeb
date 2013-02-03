@@ -5,7 +5,14 @@ from django.shortcuts import *
 from django.template.context import RequestContext
 from django.contrib.auth import authenticate, login, logout
 from models import *
+from django.http import HttpResponseRedirect
+from django.conf import settings
+from re import compile
 
+
+def not_user(request):
+  return render_to_response('login.hamlpy', context_instance=RequestContext(request, {}))
+  
 def user_login(request):
   if request.method == 'POST':
     username = request.POST['username']
@@ -20,9 +27,6 @@ def user_logout(request):
   return redirect('horseshow.views.home')
 
 def home(request):
-  if request.user.is_authenticated() == False:
-    return render_to_response('login.hamlpy', context_instance=RequestContext(request, {}))
-  teamid = str(request.user.riderTeam.all()[0].id)
   return HttpResponseRedirect('/team/'+teamid)
 
 def region(request, regionid):
