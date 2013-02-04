@@ -4,10 +4,6 @@ import dj_database_url
 import middleware
 from re import compile
 
- 
- 
-
-
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -64,6 +60,7 @@ STATIC_URL = os.getenv('STATIC_URL', 'http://s3.amazonaws.com/tuftshorses/')
 
 # Additional locations of static files
 STATICFILES_DIRS = (
+    os.path.join(STATIC_ROOT, "css/"),
     #os.path.join(PROJECT_ROOT_PATH,"static/"),
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
