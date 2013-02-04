@@ -20,6 +20,8 @@ def user_login(request):
     user = authenticate(username=username, password=password)
     if user is not None:
       login(request, user)
+    else:
+      return redirect('horseshow.views.not_user')
   return redirect('horseshow.views.home')
 
 def user_logout(request):
@@ -27,6 +29,11 @@ def user_logout(request):
   return redirect('horseshow.views.home')
 
 def home(request):
+  teamid = str(request.user.riderTeam.all()[0].id)
+  if (not teamid):
+    teamid = str(request.user.captainTeam.all()[0].id)
+  if (not teamid):
+    teamid = str(request.user.trainerTeam.all()[0].id)
   return HttpResponseRedirect('/team/'+teamid)
 
 def region(request, regionid):
