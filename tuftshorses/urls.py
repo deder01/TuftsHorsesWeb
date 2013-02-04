@@ -2,6 +2,7 @@ from django.conf.urls import patterns, include, url
 from horseshow.api import *
 from django.conf.urls.defaults import *
 from tastypie.api import Api
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 v1_api = Api(api_name='v1')
 v1_api.register(HorseResource())
@@ -27,8 +28,8 @@ urlpatterns = patterns('',
     url(r'^user_login', 'horseshow.views.user_login'),
     url(r'^logout', 'horseshow.views.user_logout'),
     url(r'^show/(?P<showid>\d+)$', 'horseshow.views.show'),
-    url(r'^static/(?P<path>.*)$', 'django.views.static.serve',
-                {'document_root':settings.STATIC_ROOT}),
+    #url(r'^static/(?P<path>.*)$', 'django.views.static.serve',
+    #            {'document_root':settings.PROJECT_ROOT_PATH}),
     # url(r'^$', 'tuftshorses.views.home', name='home'),
     # url(r'^tuftshorses/', include('tuftshorses.foo.urls')),
 
@@ -38,3 +39,5 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     # url(r'^admin/', include(admin.site.urls)),
 )
+
+urlpatterns += staticfiles_urlpatterns()
