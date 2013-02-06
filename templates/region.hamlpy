@@ -3,22 +3,24 @@
       #cont1
         .row
           .span12
-            %table.table.span4.schedule
+            %table.table.span4.schedule.table-bordered
               %tr
                 %th Date
                 %th School
               -for s in shows
                 %tr
                   %td
-                    %a{:href => "/show/{{ s.id }}"}= s.title
+                    <a href="/show/{{ s.id }}">{{ s.date.month }}/{{ s.date.day }}/{{ s.date.year }}</a>
                   %td
-                    %a{:href => "/show/{{ s.id }}"}= s.hostingTeam.id
-            .span7
-              %table.table
+                    %a{:href => "/show/{{ s.id }}"}= s.hostingTeam.school
+            .span4
+              %table.table.table-bordered
                 %tr
                   %th School
                   %th Points
-                -for t in teams
+                -for team in standings
                   %tr
                     %td
-                      %a{:href => "/team/{{ t.id }}"}= t.school
+                      %a{:href => "/team/{{ team.0.id }}"}= team.0.school
+                    %td
+                      %a{:href => "/team/{{ team.0.id }}"}= team.1
