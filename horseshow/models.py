@@ -36,6 +36,7 @@ class HorseShow(models.Model):
     teams = models.ManyToManyField('ShowTeam')
     maxriders = models.IntegerField(default=15)
     region = models.ForeignKey('Region', null=True)
+    barn = models.CharField(max_length=100)
 
 class Zone(models.Model):
     title = models.CharField(max_length=100)
@@ -68,13 +69,25 @@ class ShowTeam(models.Model):
     riders = models.ManyToManyField('Rider')
     trainers = models.ManyToManyField(User)
     def points(self):
-        pass
+      p = 0
+      for u in riders.all():
+        for r in r.rider_set.all():
+          p += r.points()
+      return p
 
 class Rider(models.Model):
     details = models.ForeignKey(User)
     horse = models.ForeignKey(Horse)
     place = models.IntegerField(default=-1)
     pointed = models.BooleanField(default=True)
+
+    def points(self):
+      if place == 1:
+        return 7
+      elif place > 6:
+        return 0
+      else:
+        return 7-place
 
 class Division(models.Model):
     title = models.CharField(max_length=100)

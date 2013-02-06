@@ -3,8 +3,26 @@
       #cont1
         .row
           .span12
-            .span4
-              %ul.showlist
+            %table.table.span4.schedule.table-bordered
+              %tr
+                %th Date
+                %th School
+                %th Barn
               -for s in shows
-                %li.nav 
-                  %a{:href => "/show/{{ s.id }}"}= s.title
+                %tr
+                  %td
+                    <a href="/show/{{ s.id }}">{{ s.date.month }}/{{ s.date.day }}/{{ s.date.year }}</a>
+                  %td
+                    %a{:href => "/show/{{ s.id }}"}= s.hostingTeam.school
+                 %td= s.barn
+            .span4
+              %table.table.table-bordered
+                %tr
+                  %th School
+                  %th Points
+                -for team in standings
+                  %tr
+                    %td
+                      %a{:href => "/team/{{ team.0.id }}"}= team.0.school
+                    %td
+                      %a{:href => "/team/{{ team.0.id }}"}= team.1

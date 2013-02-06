@@ -51,11 +51,20 @@ def home(request):
 
 def region(request, regionid):
   team = request.user.riderTeam.all()[0]
-  region = Region.objects.all().filter(id=regionid)[0]
+  region = Region.objects.all().get(id=regionid)
   shows = region.horseshow_set.all()
+  teams = region.team_set.all()
+  standings = []
+  for t in teams:
+    team_points = [t]
+    points = 0
+    for st in t.showteam_set.all():
+      points += st.points()
+    team_points.append(points)
+    standings.append(team_points)
   return render_to_response('region.hamlpy',
                             context_instance=RequestContext(request, {
-                              'team':team,
+                              'standings':standings,
                               'shows':shows,
                               }))
 
@@ -64,15 +73,20 @@ def team(request, teamid):
   teamname = team.school.lower()
   return render_to_response('team.hamlpy',
                             context_instance=RequestContext(request, {
-                              'team':team,
                               'teamname':teamname,
                               }))
 
 def show(request, showid):
-  team = Team.objects.all().filter(id=teamid)[0]
-  show = HorseShow.objects.all().filter(id=showid)[0]
+  team = Team.objects.all().get(id=teamid)
+  show = HorseShow.objects.all().get(id=showid)
   return render_to_response('show.hamlpy',
                             context_instance=RequestContext(request, {
-                              'team':team,
+                              'show':show,
+                              }))
+def zone(request, zoneid):
+  team = Team.objects.all().get(id=teamid)
+  show = HorseShow.objects.all().get(id=showid)
+  return render_to_response('show.hamlpy',
+                            context_instance=RequestContext(request, {
                               'show':show,
                               }))
