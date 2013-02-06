@@ -3,8 +3,22 @@
       #cont1
         .row
           .span12
-            .span4
-              %ul.showlist
+            %table.table.span4.schedule
+              %tr
+                %th Date
+                %th School
               -for s in shows
-                %li.nav 
-                  %a{:href => "/show/{{ s.id }}"}= s.title
+                %tr
+                  %td
+                    %a{:href => "/show/{{ s.id }}"}= s.title
+                  %td
+                    %a{:href => "/show/{{ s.id }}"}= s.hostingTeam.id
+            .span7
+              %table.table
+                %tr
+                  %th School
+                  %th Points
+                -for t in teams
+                  %tr
+                    %td
+                      %a{:href => "/team/{{ t.id }}"}= t.school
