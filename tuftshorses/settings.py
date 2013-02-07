@@ -9,6 +9,8 @@ LOGIN_EXEMPT_URLS = (
  r'^static/',
  r'^about\.html$',
  r'^legal/', # allow any URL under /legal/*
+ r'^invitation/\w+',
+ r'^register/',
 )
 
 import middleware
@@ -95,6 +97,8 @@ EMAIL_HOST= 'smtp.sendgrid.net'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_PASSWORD = os.getenv('SENDGRID_PASSWORD')
+
+ROOT_URL = os.getenv('ROOT_URL','localhost:5000')
 
 
 # Make this unique, and don't share it with anybody.
