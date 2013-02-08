@@ -8,6 +8,19 @@ from models import *
 from django.http import HttpResponseRedirect
 from django.conf import settings
 from re import compile
+from django.db.models.signals import post_save
+
+def create_profile(sender, **kw):
+    def check_for_profile(user):
+      try:
+        return Profile.objects.get(user=user)
+      except Profile.DoesNotExist:
+        return None
+    user = kw["instance"]
+    if kw["created"] or check_for_profile(user) is None:
+        up = Profile(user=user)
+        up.save()
+post_save.connect(create_profile, sender=User)
 
 
 def not_user(request):

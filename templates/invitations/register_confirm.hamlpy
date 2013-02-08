@@ -1,0 +1,7 @@
+- extends "base.hamlpy"
+
+- block content
+    You've confirmed your account. Go 
+        %a{:href => "/login"}
+            here
+    to login.

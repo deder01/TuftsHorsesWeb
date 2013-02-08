@@ -1,0 +1,5 @@
+- extends "base.hamlpy"
+
+- block content
+    You've been registered. You should receive an email in a few moments with a 
+    link to confirm your account

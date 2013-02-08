@@ -17,6 +17,13 @@ DIVISION_TYPES = (
     ("walkTrot","Walk Trot"),
 )
 
+class Profile(models.Model):
+    user = models.OneToOneField(User)
+    is_rider = models.BooleanField(default=False)
+    is_trainer = models.BooleanField(default=False)
+    is_region_director = models.BooleanField(default=False)
+    is_zone_director = models.BooleanField(default=False)
+
 class HorseShow(models.Model):
     lat = models.FloatField()
     lng = models.FloatField()

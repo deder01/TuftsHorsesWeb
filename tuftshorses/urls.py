@@ -2,6 +2,7 @@ from django.conf.urls import patterns, include, url
 from horseshow.api import *
 from django.conf.urls.defaults import *
 from tastypie.api import Api
+#from invitations.views import *
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 v1_api = Api(api_name='v1')
@@ -28,6 +29,11 @@ urlpatterns = patterns('',
     url(r'^user_login', 'horseshow.views.user_login'),
     url(r'^logout', 'horseshow.views.user_logout'),
     url(r'^show/(?P<showid>\d+)$', 'horseshow.views.show'),
+    url(r'^invite/$','invitations.views.send_invite'),
+    url(r'^invitation/(?P<invite_uuid>\w+)$','invitations.views.register'),
+    url(r'^register/(?P<uuid>\w+)$','invitations.views.confirm_registration'),
+    url(r'^register/success$','invitations.views.register_success'),
+
     #url(r'^static/(?P<path>.*)$', 'django.views.static.serve',
     #            {'document_root':settings.PROJECT_ROOT_PATH}),
     # url(r'^$', 'tuftshorses.views.home', name='home'),
