@@ -9,6 +9,15 @@ from django.http import HttpResponseRedirect
 from django.conf import settings
 from re import compile
 from django.db.models.signals import post_save
+def getTeam(user):
+  team = ''
+  if(user.riderTeam.all()):
+    teamid = (user.riderTeam.all()[0])
+  elif (user.captainTeam.all()):
+    team = (user.captainTeam.all()[0])
+  else:
+    team = (user.trainerTeam.all()[0])
+  return team
 
 def create_profile(sender, **kw):
     def check_for_profile(user):
@@ -42,12 +51,8 @@ def user_logout(request):
   return redirect('horseshow.views.home')
 
 def home(request):
-  teamid = str(request.user.riderTeam.all()[0].id)
-  if (not teamid):
-    teamid = str(request.user.captainTeam.all()[0].id)
-  if (not teamid):
-    teamid = str(request.user.trainerTeam.all()[0].id)
-  return HttpResponseRedirect('/team/'+teamid)
+    teamd = getTeam(request.user).id
+    return HttpResponseRedirect('/team/'+teamid)
 
 def region(request, regionid):
   team = request.user.riderTeam.all()[0]
@@ -69,7 +74,7 @@ def region(request, regionid):
                               }))
 
 def team(request, teamid):
-  team = request.user.riderTeam.all()[0]
+  team = getTeam(request.user)
   teamname = team.school.lower()
   return render_to_response('team.hamlpy',
                             context_instance=RequestContext(request, {
