@@ -15,7 +15,7 @@ def send_invite(request):
             clearance = invite.clearance
             profile = request.user.profile
             if clearance == 'rider':
-                
+                pass
             return HttpResponseRedirect("/")
     else:
         invite_form = InvitationForm(request.user)
