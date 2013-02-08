@@ -11,6 +11,7 @@ LOGIN_EXEMPT_URLS = (
  r'^legal/', # allow any URL under /legal/*
  r'^invitation/\w+',
  r'^register/',
+ r'^api/',
 )
 
 import middleware

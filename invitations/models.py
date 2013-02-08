@@ -3,6 +3,9 @@ from django.contrib.auth.models import User
 from uuid import uuid1
 from django.core.mail import send_mail
 from django.conf import settings
+from django.contrib.contenttypes.models import ContentType
+from horseshow.models import *
+from django.contrib.contenttypes import generic
 
 CLEARANCES = (
     ('rider','Rider'),
@@ -27,6 +30,10 @@ class Invite(models.Model):
     used = models.BooleanField(default=False)
     email_address = models.CharField(max_length=400,default="")
     created_user = models.ForeignKey(User,null=True)
+
+    content_type = models.ForeignKey(ContentType,default=)
+    object_id = models.PositiveIntegerField()
+    context = generic.GenericForeignKey('content_type', 'object_id')
 
     objects = InviteManager()
 
