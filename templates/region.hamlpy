@@ -4,6 +4,9 @@
         .row
           .span12
             %table.table.span4.schedule.table-bordered
+              %caption
+                %h3
+                  Schedule
               %tr
                 %th Date
                 %th School
@@ -11,12 +14,15 @@
               -for s in shows
                 %tr
                   %td
-                    <a href="/show/{{ s.id }}">{{ s.date.month }}/{{ s.date.day }}/{{ s.date.year }}</a>
+                    %a{:href => "/show/{{ s.id }}"}= s.hostingTeam.nickname
                   %td
-                    %a{:href => "/show/{{ s.id }}"}= s.hostingTeam.school
+                    {{ s.date.month }}/{{ s.date.day }}/{{ s.date.year }}
                  %td= s.barn
             .span4
               %table.table.table-bordered
+                %caption
+                  %h3
+                    Standings
                 %tr
                   %th School
                   %th Points
