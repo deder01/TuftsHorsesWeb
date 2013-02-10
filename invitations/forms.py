@@ -44,7 +44,7 @@ class InvitationForm(forms.ModelForm):
             choices = CLEARANCES
         else:
             userprofile = user.profile
-            if userprofile.is_rider && user.captainTeam.count()>0:
+            if userprofile.is_rider and user.captainTeam.count()>0:
                 choices = CLEARANCES[:1]
             if userprofile.is_trainer:
                 choices = CLEARANCES[:2]

@@ -9,6 +9,8 @@ from django.http import HttpResponseRedirect
 from django.conf import settings
 from re import compile
 from django.db.models.signals import post_save
+from invitations.models import *
+
 def getTeam(user):
   team = ''
   if(user.riderTeam.all()):
@@ -42,6 +44,12 @@ def user_login(request):
     user = authenticate(username=username, password=password)
     if user is not None:
       login(request, user)
+      try:
+        invite = Invite.objects.get(created_user=user)
+        if invite.creates_context:
+          pass
+      except Invite.DoesNotExist:
+        pass
     else:
       return redirect('horseshow.views.not_user')
   return redirect('horseshow.views.home')
