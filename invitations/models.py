@@ -31,9 +31,10 @@ class Invite(models.Model):
     email_address = models.CharField(max_length=400,default="")
     created_user = models.ForeignKey(User,null=True)
 
-    content_type = models.ForeignKey(ContentType)
-    object_id = models.PositiveIntegerField()
-    context = generic.GenericForeignKey('content_type', 'object_id')
+    content_type = models.ForeignKey(ContentType,null=True)
+    object_id = models.PositiveIntegerField(null=True)
+    context = generic.GenericForeignKey('content_type','object_id')
+    creates_context = models.BooleanField(default=False)
 
     objects = InviteManager()
 

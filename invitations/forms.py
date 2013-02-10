@@ -44,14 +44,14 @@ class InvitationForm(forms.ModelForm):
             choices = CLEARANCES
         else:
             userprofile = user.profile
-            if userprofile.is_rider:
+            if userprofile.is_rider && user.captainTeam.count()>0:
                 choices = CLEARANCES[:1]
             if userprofile.is_trainer:
                 choices = CLEARANCES[:2]
             if userprofile.is_region_director:
-                choices = CLEARANCES[:3]
+                choices = CLEARANCES[1:2]
             if userprofile.is_zone_director:
-                choices = CLEARANCES[:4]
+                choices = CLEARANCES[2:3]
         self.fields['clearance'] = forms.ChoiceField(choices=choices)
 
     def save(self):

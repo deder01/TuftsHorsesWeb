@@ -5,6 +5,7 @@ from models import *
 from django.contrib.auth import logout
 from django.http import HttpResponseRedirect
 from django.conf import settings
+from horseshow.models import *
 from forms import *
 
 def send_invite(request):
@@ -15,7 +16,33 @@ def send_invite(request):
             clearance = invite.clearance
             profile = request.user.profile
             if clearance == 'rider':
-                pass
+                if profile.is_rider:
+                    invite.context = request.user.riderTeam.all()[0]
+                elif profile.is_trainer:
+                    invite.context = request.user.trainerTeam.all()[0]
+            if clearance == 'trainer':
+                if profile.is_trainer:
+                    invite.context = request.user.trainerTeam.all()[0]
+                if profile.is_region_director:
+                    if not profile.is_trainer:
+                        new_team = Team.objects.create(school="",nickname="",region=request.user.region_set.all()[0],
+                                                       lat=0,lng=0,location="")
+                        new_team.save()
+                        invite.context = new_team
+                        invite.creates_context = True
+            if clearance == 'regional director':
+                if profile.is_region_director:
+                    invite.context = request.user.zone_set.all()[0]
+                elif profile.is_zone_director:
+                    new_region = Region.objects.create(title="",zone=request.user.zone_set.all()[0])
+                    new_region.save()
+                    invite.context = new_region
+                    invite.creates_context = True
+            if clearance == 'zone director':
+                new_zone = Zone.objects.create(title="")
+                new_zone.save()
+                invite.context = new_zone
+                invite.creates_context = True
             return HttpResponseRedirect("/")
     else:
         invite_form = InvitationForm(request.user)
