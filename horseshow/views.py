@@ -12,7 +12,7 @@ from django.db.models.signals import post_save
 def getTeam(user):
   team = ''
   if(user.riderTeam.all()):
-    teamid = (user.riderTeam.all()[0])
+    team = (user.riderTeam.all()[0])
   elif (user.captainTeam.all()):
     team = (user.captainTeam.all()[0])
   else:
@@ -51,7 +51,7 @@ def user_logout(request):
   return redirect('horseshow.views.home')
 
 def home(request):
-    teamd = getTeam(request.user).id
+    teamid = str(getTeam(request.user).id)
     return HttpResponseRedirect('/team/'+teamid)
 
 def region(request, regionid):
