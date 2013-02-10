@@ -10,6 +10,9 @@ from django.conf import settings
 from re import compile
 from django.db.models.signals import post_save
 from invitations.models import *
+from django.core.urlresolvers import reverse
+from django.contrib.contenttypes.models import ContentType
+from forms import *
 
 def getTeam(user):
   team = ''
@@ -47,9 +50,17 @@ def user_login(request):
       try:
         invite = Invite.objects.get(created_user=user)
         if invite.creates_context:
-          pass
-      except Invite.DoesNotExist:
-        pass
+          region_type = ContentType.objects.get(model="region")
+          zone_type = ContentType.objects.get(model="zone")
+          team_type = ContentType.objects.get(model="team")
+          if invite.content_type == region_type:
+            return redirect(reverse('horseshow.views.edit_region',args=(invite.context.id,)))
+          if invite.content_type == zone_type:
+            return redirect(reverse('horseshow.views.edit_zone',args=(invite.context.id,)))
+          if invite.content_type == team_type:
+            return redirect(reverse('horseshow.views.edit_team', args=(invite.context.id,)))
+      except Exception as inst:
+        print type(inst)
     else:
       return redirect('horseshow.views.not_user')
   return redirect('horseshow.views.home')
@@ -102,4 +113,46 @@ def zone(request, zoneid):
   return render_to_response('show.hamlpy',
                             context_instance=RequestContext(request, {
                               'show':show,
+                              }))
+
+def edit_team(request, teamid):
+  team = get_object_or_404(Team,id=teamid)
+  if request.method == "POST":
+    teamform = TeamForm(instance=team,data=request.POST)
+    if teamform.is_valid():
+      teamform.save()
+      return redirect(reverse('horseshow.views.team',args=(teamid)))
+  else:
+    teamform = TeamForm(instance=team)
+  return render_to_response('edit_team.hamlpy',
+                            context_instance=RequestContext(request,{
+                              'form':teamform,
+                              }))
+
+def edit_region(request, regionid):
+  region = get_object_or_404(Region,id=regionid)
+  if request.method == "POST":
+    regionform = RegionForm(instance=region,data=request.POST)
+    if regionform.is_valid():
+      regionform.save()
+      return redirect(reverse('horseshow.views.region',args=(regionid)))
+  else:
+    regionform = RegionForm(instance=region)
+  return render_to_response('edit_region.hamlpy',
+                            context_instance=RequestContext(request,{
+                              'form':regionform,
+                              }))
+
+def edit_zone(request, zoneid):
+  zone = get_object_or_404(Zone,id=zoneid)
+  if request.method == "POST":
+    zoneform = ZoneForm(instance=zone,data=request.POST)
+    if zoneform.is_valid():
+      zoneform.save()
+      return redirect(reverse('horseshow.views.zone',args=(zoneid)))
+  else:
+    zoneform = ZoneForm(instance=zone)
+  return render_to_response('edit_zone.hamlpy',
+                            context_instance=RequestContext(request,{
+                              'form':zoneform,
                               }))

@@ -43,6 +43,7 @@ def send_invite(request):
                 new_zone.save()
                 invite.context = new_zone
                 invite.creates_context = True
+            invite.save()
             return HttpResponseRedirect("/")
     else:
         invite_form = InvitationForm(request.user)
@@ -60,14 +61,33 @@ def register(request,invite_uuid):
             new_user = register_form.save()
             clearance = invite.clearance
             if clearance == 'rider':
-                new_user.is_rider = True
+                new_user.profile.is_rider = True
+                if invite.context is not None:
+                    team = invite.context
+                    team.riders.add(new_user)
+                    team.save()
             if clearance == 'trainer':
-                new_user.is_trainer = True
+                new_user.profile.is_trainer = True
+                if invite.context is not None:
+                    team = invite.context
+                    team.trainers.add(new_user)
+                    team.save()
             if clearance == 'zone director':
-                new_user.is_zone_director = True
+                new_user.profile.is_zone_director = True
+                if invite.context is not None:
+                    zone = invite.context
+                    zone.admin = new_user
+                    zone.save()
             if clearance == 'regional director':
-                new_user.is_region_director = True
+                new_user.profile.is_region_director = True
+                if invite.context is not None:
+                    region = invite.context
+                    region.admin = new_user
+                    region.save()
             new_user.save()
+            new_user.profile.save()
+            invite.created_user = new_user
+            invite.save()
             return HttpResponseRedirect("/register/success/")
     else:
         register_form = RegistrationForm()
