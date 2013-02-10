@@ -14,20 +14,19 @@
                 %tr
                   %th School
                   %th Points (without drop)
-                -for b in barns
+                -for s in show.teams.all
                   %tr
                     %td
-                      %a{:href => "/barn/{{ b.id }}"}= b.title
+                      %a{:href => "/team/{{ s.team.id }}"}= s.team.school
                     %td 0
             .span5
               %h1 Schedule
-              -for r in rings
-                %ul.handles.list
-                  -for d in r.divisions.all
-                    %li
-                      %span ::
-                      %a{:href => "divisions/{{ d.id }}"}= d.title
-                  %button.btn{:style => "margin-lrft: 80px; margin-top: 10px; ", :type => "button"} Save
+              %ul.handles.list.sortable
+                -for d in show.divisions.all
+                  %li
+                    %span ::
+                    %a{:href => "show/divisions/{{ d.id }}"}= d.title
+                %button.btn{:style => "margin-lrft: 80px; margin-top: 10px; ", :type => "button"} Save
             / span5
             .span3
               %h3 Last Class:
@@ -50,22 +49,3 @@
             / span2
       / span12
     / /row
-  /
-    Le javascript
-    \==================================================
-  :javascript
-      $(function() {
-        $('.sortable').sortable().bind('sortupdate', function(){
-          
-          
-        });
-        $('.handles').sortable({
-          handle: 'span'
-        });
-        $('.connected').sortable({
-          connectWith: '.connected'
-        });
-        $('.exclude').sortable({
-          items: ':not(.disabled)'
-        });
-      });

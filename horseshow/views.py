@@ -63,7 +63,7 @@ def home(request):
     return HttpResponseRedirect('/team/'+teamid)
 
 def region(request, regionid):
-  team = request.user.riderTeam.all()[0]
+  team = getTeam(request.user)
   region = Region.objects.all().get(id=regionid)
   shows = region.horseshow_set.all()
   teams = region.team_set.all()
@@ -90,14 +90,14 @@ def team(request, teamid):
                               }))
 
 def show(request, showid):
-  team = Team.objects.all().get(id=teamid)
+  team = getTeam(request.user)
   show = HorseShow.objects.all().get(id=showid)
   return render_to_response('show.hamlpy',
                             context_instance=RequestContext(request, {
                               'show':show,
                               }))
 def zone(request, zoneid):
-  team = Team.objects.all().get(id=teamid)
+  team = getTeam(request.user)
   show = HorseShow.objects.all().get(id=showid)
   return render_to_response('show.hamlpy',
                             context_instance=RequestContext(request, {

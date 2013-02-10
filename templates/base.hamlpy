@@ -75,20 +75,31 @@
 
     .container
       -block content
+    %script{:src => "{{ STATIC_URL}}js/jquery.js"}
     %script{:src => "//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"}
+    %script{:src => "{{ STATIC_URL}}js/jquery.sortable.js"}
+    %script{:src => "{{ STATIC_URL}}js/bootstrap-transition.js"}
+    %script{:src => "{{ STATIC_URL}}js/bootstrap-alert.js"}
+    %script{:src => "{{ STATIC_URL}}js/bootstrap-modal.js"}
+    %script{:src => "{{ STATIC_URL}}js/bootstrap-dropdown.js"}
+    %script{:src => "{{ STATIC_URL}}js/bootstrap-scrollspy.js"}
+    %script{:src => "{{ STATIC_URL}}js/bootstrap-tab.js"}
+    %script{:src => "{{ STATIC_URL}}js/bootstrap-tooltip.js"}
+    %script{:src => "{{ STATIC_URL}}js/bootstrap-popover.js"}
+    %script{:src => "{{ STATIC_URL}}js/bootstrap-button.js"}
+    %script{:src => "{{ STATIC_URL}}js/bootstrap-collapse.js"}
+    %script{:src => "{{ STATIC_URL}}js/bootstrap-carousel.js"}
+    %script{:src => "{{ STATIC_URL}}js/bootstrap-typeahead.js"}
     :javascript
-      window.jQuery || document.write('<script src="../../js/jquery-1.7.1.min.js"><\/script>')/ Bootstrap JS: compiled and minified
-    %script{:src => "../../js/bootstrap.min.js"}
-    / Example plugin: Prettify
-    %script{:src => "../../js/prettify/prettify.js"}
-    / Initialize Scripts
-    :javascript
-      // Activate Google Prettify in this page
-      addEventListener('load', prettyPrint, false);
-        
-      $(document).ready(function(){
-
-        // Add prettyprint class to pre elements
-          $('pre').addClass('prettyprint');
-                
-      }); // end document.ready
+      $(function() {
+        $('.sortable').sortable();
+        $('.handles').sortable({
+          handle: 'span'
+        });
+        $('.connected').sortable({
+          connectWith: '.connected'
+        });
+        $('.exclude').sortable({
+          items: ':not(.disabled)'
+        });
+      });

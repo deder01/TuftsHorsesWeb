@@ -37,7 +37,6 @@ class HorseShow(models.Model):
     maxriders = models.IntegerField(default=15)
     region = models.ForeignKey('Region', null=True)
     barn = models.CharField(max_length=100)
-
 class Zone(models.Model):
     title = models.CharField(max_length=100)
     admin = models.ForeignKey(User, null=True)
@@ -97,7 +96,7 @@ class Division(models.Model):
     eventLength = models.IntegerField(default=10)
     horses = models.ManyToManyField(Horse,through='Membership')
     riders = models.ManyToManyField(Rider)
-
+  
 class Membership(models.Model):
     horse = models.ForeignKey(Horse)
     division = models.ForeignKey(Division)
