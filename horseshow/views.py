@@ -103,9 +103,13 @@ def team(request, teamid):
 def show(request, showid):
   team = getTeam(request.user)
   show = HorseShow.objects.all().get(id=showid)
+  teams = sorted(show.teams.all(), key=lambda t: t.points())
+  divisions = show.divisions.all().order_by('order')
   return render_to_response('show.hamlpy',
                             context_instance=RequestContext(request, {
                               'show':show,
+                              'teams':teams,
+                              'divisions':divisions,
                               }))
 def zone(request, zoneid):
   team = getTeam(request.user)

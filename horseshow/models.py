@@ -69,9 +69,8 @@ class ShowTeam(models.Model):
     trainers = models.ManyToManyField(User)
     def points(self):
       p = 0
-      for u in riders.all():
-        for r in r.rider_set.all():
-          p += r.points()
+      for r in self.riders.all():
+        p += r.points()
       return p
 
 class Rider(models.Model):
@@ -81,9 +80,9 @@ class Rider(models.Model):
     pointed = models.BooleanField(default=True)
 
     def points(self):
-      if place == 1:
+      if self.place == 1:
         return 7
-      elif place > 6:
+      elif self.place > 6:
         return 0
       else:
         return 7-place

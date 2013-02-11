@@ -76,17 +76,16 @@
     .container
       -block content
     %script{:src => "{{ STATIC_URL}}js/jquerymin.js"}
+    %script{:src => "//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"}
     %script{:src => "{{ STATIC_URL}}js/jquery.sortable.js"}
     %script{:src => "{{ STATIC_URL}}js/bootstrap.min.js"}
     :javascript
       $(function() {
-        $('.sortable').sortable().bind('sortupdate', function(e, ui) {
-          console.log(ui.item.id);
-          console.log(ui.item);
-            //ui.item contains the current dragged element.
+        $('.sortable').sortable();
+        $('.sortable').sortable().bind('sortupdate', function(e, li) {
+            alert("Hello");
             //Triggered when the user stopped sorting and the DOM position has changed.
         });
-
         $('.handles').sortable({
           handle: 'span'
         });
@@ -97,5 +96,3 @@
           items: ':not(.disabled)'
         });
       });
-
-
