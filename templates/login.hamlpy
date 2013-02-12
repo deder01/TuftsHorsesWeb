@@ -25,14 +25,16 @@
           %label{:for => "username"}
             %i.icon-user>
             Username
-          %input{:name => "username", :placeholder => "Username", :type => "text"}
+          %input{:name => "username", :pldaceholder => "Username", :type => "text"}
         %p.float
           %label{:for => "password"}
             %i.icon-lock>
             Password
           %input.showpassword{:name => "password", :placeholder => "Password", :type => "password"}
         %p.clearfix
-          %input.span12{:name => "submit", :type => "submit", :value => "Log in"} 
+          %input.span12{:name => "submit", :type => "submit", :value => "Log in"}
+        %a{:href => "/forgotpassword/"}
+          Forgot Password 
 
     %script{:src => "//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"}
     :javascript

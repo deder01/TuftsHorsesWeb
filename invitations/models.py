@@ -13,6 +13,21 @@ CLEARANCES = (
     ('regional director','Regional Director'),
     ('zone director','Zone Director')
 )
+class PasswordResetManager(models.Manager):
+    def create_password_reset(self,username):
+        user = User.objects.get(username=username)
+        new_password_reset = self.create(user=user)
+        subject = "Reset your Tufts Horses password"
+        message = settings.ROOT_URL+"/forgotpassword/"+new_password_reset.uuid
+        send_mail(subject,message,"passwords@tuftshorses.herokuapp.com",[user.email])
+        return new_password_reset
+
+class PasswordReset(models.Model):
+    uuid = models.CharField(max_length=100,default=lambda:uuid1().hex)
+    date_issued = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(User)
+
+    objects = PasswordResetManager()
 
 class InviteManager(models.Manager):
     def create_invite(self,email,clearance):

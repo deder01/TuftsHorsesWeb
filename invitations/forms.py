@@ -4,6 +4,40 @@ from django import forms
 from horseshow.models import Profile
 import re
 
+class ResetPasswordForm(forms.Form):
+    def __init__(self, user, *args, **kwargs):
+        super(ResetPasswordForm, self).__init__(*args,**kwargs)
+        self.user = user
+
+    password1 = forms.CharField(widget=forms.PasswordInput(render_value=False),
+                                label=u'password')
+    password2 = forms.CharField(widget=forms.PasswordInput(render_value=False),
+                                label=u'password (again)')
+    def clean(self):
+        if 'password1' in self.cleaned_data and 'password2' in self.cleaned_data:
+            if self.cleaned_data['password1'] != self.cleaned_data['password2']:
+                raise forms.ValidationError(u'You must type the same password each time')
+        return self.cleaned_data
+
+    def save(self):
+        self.user.set_password(self.cleaned_data['password1'])
+        return self.user
+
+class RequestPasswordResetForm(forms.Form):
+    username = forms.CharField(max_length=30,
+                               widget=forms.TextInput(),
+                               label=u'username')
+    def clean_username(self):
+        try:
+            User.objects.get(username__iexact=self.cleaned_data['username'])
+        except User.DoesNotExist:
+            raise forms.ValidationError(u'This username is not associated with any account')
+        return self.cleaned_data['username']
+
+    def save(self):
+        password_reset = PasswordReset.objects.create_password_reset(self.cleaned_data['username'])
+        return password_reset
+
 class RegistrationForm(forms.Form):
     username = forms.CharField(max_length=30,
                                widget=forms.TextInput(),

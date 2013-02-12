@@ -8,6 +8,35 @@ from django.conf import settings
 from horseshow.models import *
 from forms import *
 
+def forgot_password(request):
+    if request.method == 'POST':
+        username_form = RequestPasswordResetForm(data=request.POST)
+        if username_form.is_valid():
+            username_form.save()
+            return render_to_response('invitations/forgot_password_success.hamlpy',
+                                      context_instance=RequestContext(request))
+    else:
+        username_form = RequestPasswordResetForm()
+    return render_to_response('invitations/forgot_password_form.hamlpy',
+                               context_instance=RequestContext(request,{
+                                'form':username_form,
+                                }))
+
+def reset_password(request,reset_uuid):
+    password_reset = get_object_or_404(PasswordReset,uuid=reset_uuid)
+    if request.method == "POST":
+        reset_form = ResetPasswordForm(password_reset.user,data=request.POST)
+        if reset_form.is_valid():
+            reset_form.save()
+            return render_to_response('invitations/reset_password_success.hamlpy',
+                                      context_instance=RequestContext(request))
+    else:
+        reset_form = ResetPasswordForm(password_reset.user)
+    return render_to_response('invitations/reset_password_form.hamlpy',
+                               context_instance=RequestContext(request,{
+                                'form':reset_form,
+                                }))
+
 def send_invite(request):
     if request.method ==  'POST':
         invite_form = InvitationForm(request.user,data=request.POST)

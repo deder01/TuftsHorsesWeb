@@ -12,6 +12,7 @@ LOGIN_EXEMPT_URLS = (
  r'^invitation/\w+',
  r'^register/',
  r'^api/',
+ r'^forgotpassword/',
 )
 
 import middleware

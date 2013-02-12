@@ -53,12 +53,16 @@ def user_login(request):
           region_type = ContentType.objects.get(model="region")
           zone_type = ContentType.objects.get(model="zone")
           team_type = ContentType.objects.get(model="team")
-          if invite.content_type == region_type:
-            return redirect(reverse('horseshow.views.edit_region',args=(invite.context.id,)))
-          if invite.content_type == zone_type:
-            return redirect(reverse('horseshow.views.edit_zone',args=(invite.context.id,)))
-          if invite.content_type == team_type:
-            return redirect(reverse('horseshow.views.edit_team', args=(invite.context.id,)))
+          content_type = invite.content_type
+          context = invite.context
+          invite.delete()
+          if content_type == region_type:
+            return redirect(reverse('horseshow.views.edit_region',args=(context.id,)))
+          if content_type == zone_type:
+            return redirect(reverse('horseshow.views.edit_zone',args=(context.id,)))
+          if content_type == team_type:
+            return redirect(reverse('horseshow.views.edit_team', args=(context.id,)))
+
       except Exception as inst:
         print type(inst)
     else:
@@ -159,4 +163,18 @@ def edit_zone(request, zoneid):
   return render_to_response('edit_zone.hamlpy',
                             context_instance=RequestContext(request,{
                               'form':zoneform,
+                              }))
+
+def edit_user(request):
+  user = request.user
+  if request.method == "POST":
+    userform = UserForm(instance=user,data=request.POST)
+    if userform.is_valid():
+      userform.save()
+      return redirect(reverse('horseshow.views.home'))
+  else:
+    userform = UserForm(instance=user)
+  return render_to_response('edit_user.hamlpy',
+                            context_instance=RequestContext(request,{
+                              'form':userform,
                               }))
