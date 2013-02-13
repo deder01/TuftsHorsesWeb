@@ -57,26 +57,27 @@ class TrainerResource(ModelResource):
 class RiderResource(ModelResource):
     details = fields.ForeignKey(UserResource,'details',full=True)
     horse = fields.ForeignKey('horseshow.api.HorseResource','horse',full=True)
-    division = fields.ForeignKey('horseshow.api.DivisionResource','division',full=True)
+    #divisions = fields.ForeignKey('horseshow.api.DivisionResource','division_set')
     class Meta:
         queryset = Rider.objects.all()
         resource_name = 'rider'
 
 class MembershipResource(ModelResource):
-    details = fields.ForeignKey('horseshow.api.HorseResource','details',full=True)
+    details = fields.ForeignKey('horseshow.api.HorseResource','horse',full=True)
     class Meta:
         queryset = Membership.objects.all()
         resource_name = 'membership'
 
 class DivisionResource(ModelResource):
-    horses = fields.ToManyField('horseshow.api.MembershipResource','horses',full=True)
+    horses = fields.ToManyField('horseshow.api.MembershipResource','membership_set',full=True)
+    riders = fields.ToManyField('horseshow.api.RiderResource','riders',full=True)
     class Meta:
         queryset = Division.objects.all()
         resource_name = 'division'
 
 class ShowTeamResource(ModelResource):
     team = fields.ForeignKey('horseshow.api.TeamResource','team',full=True)
-    riders = fields.ToManyField('horseshow.api.RiderResource','rider',full=True)
+    riders = fields.ToManyField('horseshow.api.RiderResource','riders',full=True)
     trainers = fields.ToManyField(UserResource,'trainers',full=True)
     class Meta:
         queryset = ShowTeam.objects.all()

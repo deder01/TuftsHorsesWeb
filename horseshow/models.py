@@ -37,6 +37,7 @@ class HorseShow(models.Model):
     maxriders = models.IntegerField(default=15)
     region = models.ForeignKey('Region', null=True)
     barn = models.CharField(max_length=100)
+    
 class Zone(models.Model):
     title = models.CharField(max_length=100)
     admin = models.ForeignKey(User, null=True)

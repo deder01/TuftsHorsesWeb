@@ -1,34 +1,35 @@
-{%extends "base.hamlpy" %}
-    -block content
-      #cont1
-        .row
-          .span12
-            %table.table.span4.schedule.table-bordered
-              %caption
-                %h3
-                  Schedule
+- extends "base.hamlpy"
+
+- block content
+  #cont1
+    .row
+      .span12
+        %table.table.span4.schedule.table-bordered
+          %caption
+            %h3
+              Schedule
+          %tr
+            %th Date
+            %th School
+            %th Barn
+          -for s in shows
+            %tr
+              %td
+                %a{:href => "/show/{{ s.id }}"}= s.hostingTeam.nickname
+              %td
+                {{ s.date.month }}/{{ s.date.day }}/{{ s.date.year }}
+             %td= s.barn
+        .span4
+          %table.table.table-bordered
+            %caption
+              %h3
+                Standings
+            %tr
+              %th School
+              %th Points
+            -for team in standings
               %tr
-                %th Date
-                %th School
-                %th Barn
-              -for s in shows
-                %tr
-                  %td
-                    %a{:href => "/show/{{ s.id }}"}= s.hostingTeam.nickname
-                  %td
-                    {{ s.date.month }}/{{ s.date.day }}/{{ s.date.year }}
-                 %td= s.barn
-            .span4
-              %table.table.table-bordered
-                %caption
-                  %h3
-                    Standings
-                %tr
-                  %th School
-                  %th Points
-                -for team in standings
-                  %tr
-                    %td
-                      %a{:href => "/team/{{ team.0.id }}"}= team.0.school
-                    %td
-                      %a{:href => "/team/{{ team.0.id }}"}= team.1
+                %td
+                  %a{:href => "/team/{{ team.0.id }}"}= team.0.school
+                %td
+                  %a{:href => "/team/{{ team.0.id }}"}= team.1
