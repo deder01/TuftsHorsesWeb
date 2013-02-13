@@ -74,6 +74,7 @@ class DivisionResource(ModelResource):
     class Meta:
         queryset = Division.objects.all()
         resource_name = 'division'
+        authorization = Authorization()
 
 class ShowTeamResource(ModelResource):
     team = fields.ForeignKey('horseshow.api.TeamResource','team',full=True)
