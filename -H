@@ -1,0 +1,8 @@
+HTTP/1.1 401 UNAUTHORIZED
+Server: gunicorn/0.14.6
+Date: Wed, 13 Feb 2013 02:44:02 GMT
+Connection: close
+Transfer-Encoding: chunked
+Vary: Cookie
+Content-Type: text/html; charset=utf-8
+
