@@ -1,4 +1,4 @@
-!!!
+!!! 5
 {% load static %}
 %html{:lang => "en"}
   %head
@@ -9,75 +9,72 @@
     %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}
     %meta{:content => "", :name => "description"}
     %meta{:content => "", :name => "author"}
-    %link{:href => "{{ STATIC_URL }}css/bootstrap.css", :rel => 'stylesheet'}
-    %link{:href => "{{ STATIC_URL }}css/bootstrap-responsive.css", :rel => 'stylesheet'}
-    %link{:href => "{{ STATIC_URL }}css/base.css", :rel => 'stylesheet'}
-          / HTML5 shim, for IE6-8 support of HTML5 elements
-          /[if lt IE 9]
-            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    / NAVBAR
-    /  ==================================================
-    / Wrap the .navbar in .container to center it on the page and provide easy way to target it with .navbar-wrapper.
+    %link{:href => "{{ STATIC_URL }}css/bootstrap.min.css", :rel => 'stylesheet'}
+     :css
+        body {
+          padding-top: 60px;
+          padding-bottom: 40px;
+        }
+        .sidebar-nav {
+          padding: 9px 0;
+        }
+
+        @media (max-width: 980px) {
+          /* Enable use of floated navbar text */
+          .navbar-text.pull-right {
+            float: none;
+            padding-left: 5px;
+            padding-right: 5px;
+          }
+        }
+    %link{:href => "{{ STATIC_URL }}css/bootstrap-responsive.min.css", :rel => 'stylesheet'}
+
+    /%link{:href => "{{ STATIC_URL }}css/base.css", :rel => 'stylesheet'}
+
   %body
-    .container.navbar-wrapper
-      .navbar.navbar-inverse
+    -if user.is_authenticated
+      .navbar.navbar-fixed-top
         .navbar-inner
-          / Responsive Navbar Part 1: Button for triggering responsive navbar (not covered in tutorial). Include responsive CSS to utilize.
-          -if user.riderTeam.all.0
-            %a.btn.btn-navbar{"data-target" => ".nav-collapse", "data-toggle" => "collapse"}
+          .container-fluid
+            %button.btn.btn-navbar{"data-target" => ".nav-collapse", "data-toggle" => "collapse", :type => "button"}
               %span.icon-bar
               %span.icon-bar
               %span.icon-bar
-                %a.brand{:href => "/team/{{ user.riderTeam.all.0.id}}"}= user.riderTeam.all.0.school 
-            .nav-collapse.collapse
-              %ul.nav
-                %li
-                  %a{:href => "/region/{{ user.riderTeam.all.0.region.id }}"}= user.riderTeam.all.0.region.title 
-                %li
-                  %a{:href => "/zone/{{ user.riderTeam.all.0.region.zone.id }}"}= user.riderTeam.all.0.region.zone.title 
-            %form.navbar-form.pull-right{:action => "/logout", :method => "post"}
-              {% csrf_token %}
-              %button.btn{:type => "submit"} Logout
-
-          -elif user.captainTeam.all.0
-            %a.btn.btn-navbar{"data-target" => ".nav-collapse", "data-toggle" => "collapse"}
-              %span.icon-bar
-              %span.icon-bar
-              %span.icon-bar
-                %a.brand{:href => "/team/{{ user.captainTeam.all.0.id}}"}= user.captainTeam.all.0.school 
-            .nav-collapse.collapse
-              %ul.nav
-                %li
-                  %a{:href => "/region/{{ user.captainTeam.all.0.region.id }}"}= user.captainTeam.all.0.region.title 
-                %li
-                  %a{:href => "/zone/{{ user.captainTeam.all.0.region.zone.id }}"}= user.captainTeam.all.0.region.zone.title 
-            %form.navbar-form.pull-right{:action => "/logout", :method => "post"}
-              {% csrf_token %}
-              %button.btn{:type => "submit"} Logout
-
-          -else
-            %a.btn.btn-navbar{"data-target" => ".nav-collapse", "data-toggle" => "collapse"}
-              %span.icon-bar
-              %span.icon-bar
-              %span.icon-bar
-                %a.brand{:href => "/team/{{ user.trainerTeam.all.0.id}}"}= user.trainerTeam.all.0.school 
-            .nav-collapse.collapse
-              %ul.nav
-                %li
-                  %a{:href => "/region/{{ user.trainerTeam.all.0.region.id }}"}= user.trainerTeam.all.0.region.title 
-                %li
-                  %a{:href => "/zone/{{ user.trainerTeam.all.0.region.zone.id }}"}= user.trainerTeam.all.0.region.zone.title 
-            %form.navbar-form.pull-right{:action => "/logout", :method => "post"}
-              {% csrf_token %}
-              %button.btn{:type => "submit"} Logout
-
-
-
-    .container
+            %a.brand{:href => "#"} Tufts Horses
+            - block navbar
+              .nav-collapse.collapse
+                %p.navbar-text.pull-right
+                  Logged in as
+                  %a.navbar-link{:href => "#"}= user.username
+                %ul.nav
+                  -if user.profile.is_rider
+                    %li
+                      %a{:href => "/zone/{{ user.riderTeam.all.0.region.zone.id }}"}= user.riderTeam.all.0.region.zone.title
+                    %li
+                      %a{:href => "/region/{{ user.riderTeam.all.0.region.id }}"}= user.riderTeam.all.0.region.title 
+                    %li
+                      %a{:href => "/team/{{ user.riderTeam.all.0.id}}"}= user.riderTeam.all.0.school
+                  -elif user.profile.is_trainer
+                    %li
+                      %a{:href => "/zone/{{ user.trainerTeam.all.0.region.zone.id }}"}= user.trainerTeam.all.0.region.zone.title
+                    %li
+                      %a{:href => "/region/{{ user.trainerTeam.all.0.region.id }}"}= user.trainerTeam.all.0.region.title 
+                    %li
+                      %a{:href => "/team/{{ user.trainerTeam.all.0.id}}"}= user.trainerTeam.all.0.school
+                  -elif user.profile.is_region_director
+                    %li
+                      %a{:href => "/zone/{{ user.region_set.all.0.zone.id }}"}= user.region_set.all.0.zone.title
+                    %li
+                      %a{:href => "/region/{{ user.region_set.all.0.id }}"}= user.region_set.all.0.title
+                  -elif user.profile.is_zone_director
+                    %li
+                      %a{:href => "/zone/{{ user.zone_set.all.0.id }}"}= user.zone_set.all.0.title
+    .container-fluid
       -block content
     %script{:src => "{{ STATIC_URL}}js/jquerymin.js"}
     %script{:src => "{{ STATIC_URL}}js/jquery.sortable.js"}
     %script{:src => "{{ STATIC_URL}}js/bootstrap.min.js"}
+    %script{:src => "{{ STATIC_URL}}js/bootstrap-collapse.js"}
     :javascript
       $(function() {
         $('.sortable').sortable().bind('sortupdate', function(e, ui) {

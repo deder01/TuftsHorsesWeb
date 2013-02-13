@@ -1,34 +1,31 @@
-{%extends "base.hamlpy" %}
-    -block content
-      #cont1
+- extends "base.hamlpy"
+
+-block content
+  .row-fluid
+    .span9.hero-unit
+        %h2 {{ teamname }}
         .row
-          .span12
-            .span8
-              .span8.team-page
-                %h2 {{ barnname }}
-                %img.span7{:src => "{{ STATIC_URL }}img/teams/{{ teamname}}/tufts-team.png", :style => "margin-bottom: 30px;"}
-                  .hero-unit
-                    %img.thumbnail.span2{:src => "{{ STATIC_URL }}img/first.png"}
-                      %h2 Recent Results
-                      %ul.dl-horizontal.span4
-                        %dt
-                          %a{:href => "../../shows/{{ teamname }}/index.html"}= team.nickname
-                        %dd 1st
-                        %dt
-                          %a{:href => "../../shows/bu/index.html"} BU
-                        %dd 2nd
-                        %dt
-                          %a{:href => "../../shows/stonehill/index.html"} Stonehill
-                        %dd 3rd
-            .span3.random-rider
-              %h2 Random Rider
-              %img.thumbnail.span3{:src => "{{ STATIC_URL }}img/teams/{{ teamname }}/roster/david-eder.jpg", :style => "margin-bottom: 15px; margin-left: 0;"}
-                %p Name: David Eder
-                %p Major: Compute Science
-                %p Class: Novice
-                %p About: Some stuff. And stuff.  And stuff.
-            / span3
-          / span12
-        / /row
-      / container
-    /
+            %img.thumbnail{:src => "{{STATIC_URL}}img/teams/{{teamname}}/tufts-team.png", :style => "margin-bottom: 30px;"}
+        .row
+          .span2
+            %img.thumbnail{:src => "{{STATIC_URL}}img/first.png"}
+          .span7
+              %h2 Recent Results
+              %ul.dl-horizontal
+                %dt
+                  %a{:href => "../../shows/{{teamname}}/index.html"}= team.nickname
+                %dd 1st
+                %dt
+                  %a{:href => "../../shows/bu/index.html"} BU
+                %dd 2nd
+                %dt
+                  %a{:href => "../../shows/stonehill/index.html"} Stonehill
+                %dd 3rd
+    .span3.well
+      %h2 Random Rider
+      %img.thumbnail{:src => "{{ STATIC_URL }}img/teams/{{ teamname }}/roster/david-eder.jpg", :style => "margin-bottom: 15px;"}
+      %p Name: David Eder
+      %p Major: Compute Science
+      %p Class: Novice
+      %p About: Some stuff. And stuff.  And stuff.
+    .clearfix

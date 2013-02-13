@@ -1,8 +1,10 @@
-- extends "base.hamlpy"
+- extends "form_base.hamlpy"
 
-- block content
+- block form
     %form{:method => "post"}
+        %h2.form-heading
+            Register
         {{form.as_p}}
         {% csrf_token %}
-        %input.btn{:name => "submit", :type => "submit", :value => "Register"}
+        %input.btn.btn-primary{:name => "submit", :type => "submit", :value => "Register"}
         

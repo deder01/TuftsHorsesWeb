@@ -1,5 +1,7 @@
-- extends "base.hamlpy"
+- extends "form_base.hamlpy"
 
-- block content
-    You've been registered. You should receive an email in a few moments with a 
-    link to confirm your account
+- block form
+    %form
+        %h5.form-heading{:style => "text-align:center"}
+            You've been registered. You should receive an email in a few moments with a 
+            link to confirm your account
