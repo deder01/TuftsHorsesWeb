@@ -21,6 +21,7 @@ class ResetPasswordForm(forms.Form):
 
     def save(self):
         self.user.set_password(self.cleaned_data['password1'])
+        self.user.save()
         return self.user
 
 class RequestPasswordResetForm(forms.Form):
