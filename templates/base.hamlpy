@@ -87,20 +87,13 @@
               var url = 'http://localhost:5000/api/v1/division/';
               url = url + divs[i].id;
               url = url + '/';
-              console.log(url);
               $.ajax({
                 url: url,
                 type: 'PATCH',
-                contentType: 'application.json',
+                contentType: 'application/json',
                 data: data,
-                dataType: 'json',
+                dataType: 'application/json',
                 processData: false,
-                success: function(){
-                  alert('success');
-                },
-                error: function(){
-                  alert('failure');
-                }            
               })
 
             }
