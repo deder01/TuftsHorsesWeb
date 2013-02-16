@@ -79,8 +79,13 @@
     :javascript
       $(function() {
         $('.sortable').sortable().bind('sortupdate', function(e, ui) {
-          console.log(ui.item.id);
-          console.log(ui.item);
+            var divs = $("ul#sortable li")
+            for(var i=0; i<divs.length; i++){
+              console.log(divs[i].id);
+            }
+            //ui.item contains the current dragged element.
+            //Triggered when the user stopped sorting and the DOM position has changed.
+        });
             //ui.item contains the current dragged element.
             //Triggered when the user stopped sorting and the DOM position has changed.
         });
