@@ -3,7 +3,7 @@
 -block content
   .row-fluid
     .span9.hero-unit
-        %h2 {{ teamname }}
+        %h2 {{ team.school }}
         .row
             %img.thumbnail{:src => "{{STATIC_URL}}img/teams/{{teamname}}/tufts-team.png", :style => "margin-bottom: 30px;"}
         .row

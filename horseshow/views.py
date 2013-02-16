@@ -98,11 +98,9 @@ def region(request, regionid):
 
 def team(request, teamid):
   team = getTeam(request.user)
-  teamname = team.school.lower()
   return render_to_response('team.hamlpy',
                             context_instance=RequestContext(request, {
                               'team':team,
-                              'teamname':teamname,
                               }))
 
 def show(request, showid):
