@@ -81,11 +81,29 @@
         $('.sortable').sortable().bind('sortupdate', function(e, ui) {
             var divs = $("ul#sortable li")
             for(var i=0; i<divs.length; i++){
-              console.log(divs[i].id);
+              var data = JSON.stringify({
+                "order": i
+              });                
+              var url = 'http://localhost:5000/api/v1/division/';
+              url = url + divs[i].id;
+              url = url + '/';
+              console.log(url);
+              $.ajax({
+                url: url,
+                type: 'PATCH',
+                contentType: 'application.json',
+                data: data,
+                dataType: 'json',
+                processData: false,
+                success: function(){
+                  alert('success');
+                },
+                error: function(){
+                  alert('failure');
+                }            
+              })
+
             }
-            //ui.item contains the current dragged element.
-            //Triggered when the user stopped sorting and the DOM position has changed.
-        });
             //ui.item contains the current dragged element.
             //Triggered when the user stopped sorting and the DOM position has changed.
         });

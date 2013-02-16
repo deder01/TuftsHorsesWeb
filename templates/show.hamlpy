@@ -23,7 +23,7 @@
               %h1 Schedule
               %ul#sortable.handles.list.sortable
                 -for d in  divisions
-                  %li
+                  %li{:id => "{{ d.id }}"}
                     %span ::
                     %a{:href => "show/divisions/{{ d.id }}"}= d.title
             .span3
