@@ -6,15 +6,17 @@ from datetime import date, time, datetime, timedelta
 from copy import deepcopy
 
 DIVISION_TYPES = (
-    ("openFences","Open Fences"),
-    ("interFences","Intermediate Fences"),
-    ("noviceFences","Novice Fences"),
-    ("openFlat","Open Flat"),
-    ("interFlat","Intermediate Flat"),
-    ("noviceFlat","Novice Flat"),
-    ("wtcAdv","Advanced Walk Trot Cantor"),
-    ("wtcBegin","Beginner Walk Trot Cantor"),
-    ("walkTrot","Walk Trot"),
+    ("none","None"),
+    ("open","Open"),
+    ("intermediate","Intermediate"),
+    ("novice","Novice"),
+    ("wtc","Walk Trot Cantor"),
+    ("wt","Walk Trot")
+)
+
+CLASS_TYPES = (
+    ("flat","Flat"),
+    ("fences","Fences")
 )
 
 class Profile(models.Model):
@@ -24,6 +26,11 @@ class Profile(models.Model):
     is_region_director = models.BooleanField(default=False)
     is_zone_director = models.BooleanField(default=False)
 
+    # rider properties
+    fences_division = models.CharField(max_length=20,choices=DIVISION_TYPES[:4])
+    flat_division = models.CharField(max_length=20)
+    points = models.IntegerField(default=0)
+
 class HorseShow(models.Model):
     lat = models.FloatField()
     lng = models.FloatField()
@@ -31,13 +38,13 @@ class HorseShow(models.Model):
     title = models.CharField(max_length=100)
     date = models.DateTimeField(default=datetime.now())
     admin = models.ManyToManyField(User)
-    hostingTeam = models.ForeignKey('Team',null=True)
-    divisions = models.ManyToManyField('Division')
+    hosting_team = models.ForeignKey('Team',null=True)
+    classes = models.ManyToManyField('Class')
     teams = models.ManyToManyField('ShowTeam')
     maxriders = models.IntegerField(default=15)
     region = models.ForeignKey('Region', null=True)
     barn = models.CharField(max_length=100)
-    
+
 class Zone(models.Model):
     title = models.CharField(max_length=100)
     admin = models.ForeignKey(User, null=True)
@@ -64,21 +71,13 @@ class Horse(models.Model):
     weight = models.CharField(max_length=10,default="1000")
     gender = models.CharField(max_length=20,default="gelding")
     
-class ShowTeam(models.Model):
-    team = models.ForeignKey(Team)
-    riders = models.ManyToManyField('Rider')
-    trainers = models.ManyToManyField(User)
-    def points(self):
-      p = 0
-      for r in self.riders.all():
-        p += r.points()
-      return p
-
 class Rider(models.Model):
-    details = models.ForeignKey(User)
+    user = models.ForeignKey(User)
+    showteam = models.ForeignKey('ShowTeam')
     horse = models.ForeignKey(Horse)
     place = models.IntegerField(default=-1)
     pointed = models.BooleanField(default=True)
+    class_type = models.CharField(choices=CLASS_TYPES,max_length=20)
 
     def points(self):
       if self.place == 1:
@@ -88,10 +87,22 @@ class Rider(models.Model):
       else:
         return 7-place
 
-class Division(models.Model):
+class ShowTeam(models.Model):
+    team = models.ForeignKey(Team)
+    riders = models.ManyToManyField(User,through=Rider,related_name='show_team_riders')
+    trainers = models.ManyToManyField(User,related_name='show_team_trainers')
+
+    def points(self):
+      p = 0
+      for r in Rider.objects.filter(showteam=self):
+        p += r.points()
+      return p
+
+class Class(models.Model):
     title = models.CharField(max_length=100)
     judge = models.CharField(max_length=100)
-    type = models.CharField(choices=DIVISION_TYPES, max_length=20)
+    type = models.CharField(choices=CLASS_TYPES, max_length=20)
+    division = models.CharField(choices=DIVISION_TYPES,max_length=20)
     order = models.IntegerField(default=-1)
     eventLength = models.IntegerField(default=10)
     horses = models.ManyToManyField(Horse,through='Membership')
@@ -99,7 +110,7 @@ class Division(models.Model):
   
 class Membership(models.Model):
     horse = models.ForeignKey(Horse)
-    division = models.ForeignKey(Division)
+    event_class = models.ForeignKey(Class)
     alternate = models.BooleanField(default=False)
     able = models.BooleanField(default=True) 
     height_limit = models.IntegerField(default=300) #inches

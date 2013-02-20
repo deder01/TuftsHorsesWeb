@@ -18,7 +18,7 @@ class HorseResource(ModelResource):
 
 class HorseShowResource(ModelResource):
     admin = fields.ToManyField(UserResource,'admin',full=True)
-    hostingTeam = fields.ForeignKey('horseshow.api.TeamResource','hostingTeam',full=True,null=True)
+    hosting_team = fields.ForeignKey('horseshow.api.TeamResource','hosting_team',null=True)
     divisions = fields.ToManyField('horseshow.api.DivisionResource','divisions',full=True)
     teams = fields.ToManyField('horseshow.api.ShowTeamResource','teams',full=True)
     class Meta:
@@ -27,9 +27,9 @@ class HorseShowResource(ModelResource):
         authorization = Authorization()
         
 class TeamResource(ModelResource):
-    captains = fields.ToManyField(UserResource,'captains',full=True)
-    riders = fields.ToManyField(UserResource,'riders',full=True)
-    trainers = fields.ToManyField(UserResource,'trainers',full=True)
+    captains = fields.ToManyField(UserResource,'captains')
+    riders = fields.ToManyField(UserResource,'riders')
+    trainers = fields.ToManyField(UserResource,'trainers')
     class Meta:
         resource_name = 'team'
         queryset = Team.objects.all()
@@ -69,23 +69,23 @@ class RiderResource(ModelResource):
         authorization = Authorization()
 
 class MembershipResource(ModelResource):
-    details = fields.ForeignKey('horseshow.api.HorseResource','horse',full=True)
+    details = fields.ForeignKey('horseshow.api.HorseResource','horse')
     class Meta:
         queryset = Membership.objects.all()
         resource_name = 'membership'
         authorization = Authorization()
 
-class DivisionResource(ModelResource):
+class ClassResource(ModelResource):
     horses = fields.ToManyField('horseshow.api.MembershipResource','membership_set',full=True)
     riders = fields.ToManyField('horseshow.api.RiderResource','riders',full=True)
     class Meta:
-        queryset = Division.objects.all()
-        resource_name = 'division'
+        queryset = Class.objects.all()
+        resource_name = 'class'
         authorization = Authorization()
 
 class ShowTeamResource(ModelResource):
     team = fields.ForeignKey('horseshow.api.TeamResource','team',full=True)
-    riders = fields.ToManyField('horseshow.api.RiderResource','riders',full=True)
+    riders = fields.ToManyField('horseshow.api.RiderResource','rider_set')
     trainers = fields.ToManyField(UserResource,'trainers',full=True)
     class Meta:
         queryset = ShowTeam.objects.all()
