@@ -28,8 +28,11 @@
           }
         }
     %link{:href => "{{ STATIC_URL }}css/bootstrap-responsive.min.css", :rel => 'stylesheet'}
+    %link{:href => "{{ STATIC_URL }}css/bootstrap-timepicker.min.css", :rel => 'stylesheet'}
+    %link{:href => "{{ STATIC_URL }}css/datepicker.css", :rel => 'stylesheet'}
     %link{:href => "{{ STATIC_URL }}css/sortable.css", :rel => 'stylesheet'}
-
+    %script{:src => "{{ STATIC_URL}}js/jquerymin.js"}
+    %script{:src => "{{ STATIC_URL}}js/bootstrap-timepicker.min.js"}
     /%link{:href => "{{ STATIC_URL }}css/base.css", :rel => 'stylesheet'}
 
   %body
@@ -86,9 +89,9 @@
 
     .container-fluid
       -block content
-    %script{:src => "{{ STATIC_URL}}js/jquerymin.js"}
     %script{:src => "{{ STATIC_URL}}js/jquery.sortable.js"}
     %script{:src => "{{ STATIC_URL}}js/bootstrap.min.js"}
+    %script{:src => "{{ STATIC_URL}}js/bootstrap-datepicker.js"}
     //%script{:src => "{{ STATIC_URL}}js/bootstrap-collapse.js"}
     :javascript
       $(function() {

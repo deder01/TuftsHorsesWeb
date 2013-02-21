@@ -110,12 +110,12 @@ def show(request, showid):
   team = getTeam(request.user)
   show = HorseShow.objects.all().get(id=showid)
   teams = sorted(show.teams.all(), key=lambda t: t.points())
-  divisions = show.divisions.all().order_by('order')
+  classes = show.classes.all().order_by('order')
   return render_to_response('show.hamlpy',
                             context_instance=RequestContext(request, {
                               'show':show,
                               'teams':teams,
-                              'divisions':divisions,
+                              'divisions':classes,
                               }))
 def zone(request, zoneid):
   team = getTeam(request.user)
@@ -151,7 +151,7 @@ def edit_region(request, regionid):
     regionform = RegionForm(instance=region,data=request.POST)
     if regionform.is_valid():
       regionform.save()
-      return redirect(reverse('horseshow.views.region',args=(regionid)))
+      return redirect(reverse('horseshow.views.region',args=(regionid,)))
   else:
     regionform = RegionForm(instance=region)
   return render_to_response('edit_region.hamlpy',
@@ -165,7 +165,7 @@ def edit_zone(request, zoneid):
     zoneform = ZoneForm(instance=zone,data=request.POST)
     if zoneform.is_valid():
       zoneform.save()
-      return redirect(reverse('horseshow.views.zone',args=(zoneid)))
+      return redirect(reverse('horseshow.views.zone',args=(zoneid,)))
   else:
     zoneform = ZoneForm(instance=zone)
   return render_to_response('edit_zone.hamlpy',
@@ -185,4 +185,38 @@ def edit_user(request):
   return render_to_response('edit_user.hamlpy',
                             context_instance=RequestContext(request,{
                               'form':userform,
+                            }))
+
+def new_show(request):
+  team = getTeam(request.user)
+  if request.method == "POST":
+    show_form = ShowForm(team,data=request.POST)
+    if show_form.is_valid():
+      horse_show = show_form.save()
+      return redirect(reverse('horseshow.views.show',args=(horse_show.id,)))
+  else:
+    show_form = ShowForm(team,initial={'date':datetime.now()})
+  return render_to_response('new_horse_show.hamlpy',
+                            context_instance=RequestContext(request,{
+                              'form':show_form,  
+                            }))
+
+def edit_show_team(request,showteamid):
+  showteam = get_object_or_404(ShowTeam,id=showteamid)
+  fences_riders = map(lambda x:x.user,showteam.rider_set.filter(class_type="fences"))
+  flat_riders = map(lambda x:x.user,showteam.rider_set.filter(class_type="flat"))
+  if request.method == "POST":
+    rosterform = RosterForm(showteam,data=request.POST)
+    if rosterform.is_valid():
+      rosterform.save()
+      pass
+  else:
+    rosterform = RosterForm(showteam,initial={"fences_riders":fences_riders,"flat_riders":flat_riders})
+  zipped_fields = zip(showteam.team.riders.all(),*[boundField for boundField in rosterform])
+  return render_to_response('edit_roster.hamlpy',
+                            context_instance=RequestContext(request,{
+                              'form':rosterform,
+                              'zipped_fields':zipped_fields,
+                              'showteam':showteam,
                               }))
+

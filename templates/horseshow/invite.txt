@@ -1,0 +1,3 @@
+Hi {{username}},
+    {{horseshow.hosting_team.school}} has invited you to the {{horseshow.name}} at {{horseshow.location}} on {{horseshow.date|date:"l, F j, Y"}}.
+    You can edit your roster for this show at {{root_url}}{% url horseshow.views.edit_show_team showteamid=showteam.id %} or view information about the event at {{root_url}}{% url horseshow.views.show showid=horseshow.id %}

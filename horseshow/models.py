@@ -4,6 +4,10 @@ from django.conf import settings
 from pygraph.classes.graph import graph
 from datetime import date, time, datetime, timedelta
 from copy import deepcopy
+from django.template.loader import get_template
+from django.template import Context
+from django.core.mail import send_mail
+
 
 DIVISION_TYPES = (
     ("none","None"),
@@ -31,6 +35,24 @@ class Profile(models.Model):
     flat_division = models.CharField(max_length=20,choices=DIVISION_TYPES,default="none")
     points = models.IntegerField(default=0)
 
+class HorseShowManager(models.Manager):
+    def create(self,*args,**kwargs):
+        new_horse_show = super(HorseShowManager,self).create(*args,**kwargs)
+        new_horse_show.save()
+        team = new_horse_show.hosting_team
+        for regional_team in Team.objects.filter(region=team.region):
+            new_show_team = ShowTeam.objects.create(team=regional_team)
+            new_show_team.save()
+            new_horse_show.teams.add(new_show_team)
+            for trainer in regional_team.trainers.all():
+                subject = "You've been invited to a horse show"
+                email_template = get_template('horseshow/invite.txt')
+                d = Context({'username':trainer.username, 'horseshow':new_horse_show,'showteam':new_show_team,'root_url':settings.ROOT_URL})
+                message = email_template.render(d)
+                send_mail(subject,message,"invitation@tuftshorses.herokuapp.com",[trainer.email])
+        new_horse_show.save()
+        return new_horse_show
+
 class HorseShow(models.Model):
     lat = models.FloatField()
     lng = models.FloatField()
@@ -44,6 +66,8 @@ class HorseShow(models.Model):
     maxriders = models.IntegerField(default=15)
     region = models.ForeignKey('Region', null=True)
     barn = models.CharField(max_length=100)
+
+    objects = HorseShowManager()
 
 class Zone(models.Model):
     title = models.CharField(max_length=100)
@@ -74,7 +98,7 @@ class Horse(models.Model):
 class Rider(models.Model):
     user = models.ForeignKey(User)
     showteam = models.ForeignKey('ShowTeam')
-    horse = models.ForeignKey(Horse)
+    horse = models.ForeignKey(Horse,null=True)
     place = models.IntegerField(default=-1)
     pointed = models.BooleanField(default=True)
     class_type = models.CharField(choices=CLASS_TYPES,max_length=20)
