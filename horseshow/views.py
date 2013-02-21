@@ -13,6 +13,7 @@ from invitations.models import *
 from django.core.urlresolvers import reverse
 from django.contrib.contenttypes.models import ContentType
 from forms import *
+from django.forms.models import modelformset_factory
 
 def getTeam(user):
   team = ''
@@ -98,9 +99,11 @@ def region(request, regionid):
 
 def team(request, teamid):
   team = getTeam(request.user)
+  teamname = team.school.lower()
   return render_to_response('team.hamlpy',
                             context_instance=RequestContext(request, {
                               'team':team,
+                              'teamname':teamname
                               }))
 
 def show(request, showid):
@@ -124,16 +127,22 @@ def zone(request, zoneid):
 
 def edit_team(request, teamid):
   team = get_object_or_404(Team,id=teamid)
+  DivisionFormSet = modelformset_factory(Profile,extra=0,form=DivisionForm)
   if request.method == "POST":
     teamform = TeamForm(instance=team,data=request.POST)
+    division_form_set = DivisionFormSet(request.POST,queryset=Profile.objects.filter(user__in=team.riders.all()))
     if teamform.is_valid():
       teamform.save()
-      return redirect(reverse('horseshow.views.team',args=(teamid)))
+      if division_form_set.is_valid():
+        division_form_set.save()
+        return redirect(reverse('horseshow.views.team',args=(teamid)))
   else:
     teamform = TeamForm(instance=team)
+    division_form_set = DivisionFormSet(queryset=Profile.objects.filter(user__in=team.riders.all()))
   return render_to_response('edit_team.hamlpy',
                             context_instance=RequestContext(request,{
                               'form':teamform,
+                              'division_form_set':division_form_set
                               }))
 
 def edit_region(request, regionid):

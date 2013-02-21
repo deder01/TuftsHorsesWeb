@@ -2,7 +2,28 @@
 
 - block form
     %form{:method => "post"}
+        %h3
+            Team Info
         {{form.as_p}}
+        %h3
+            Roster
+        {{division_form_set.management_form}}
+        %table
+            %tr
+                %td
+                    Rider
+                %td 
+                    Fences Division
+                %td
+                    Flat Division
+            - for form in division_form_set
+                %tr
+                    %td
+                        {{form.instance.user.first_name}}
+                        {{form.instance.user.last_name}}
+                    - for field in form
+                        %td
+                            {{ field }}
         {% csrf_token %}
-        %input.btn{:name => "submit", :type => "submit", :value => "Save Team"}
+        %input.btn.btn-primary{:name => "submit", :type => "submit", :value => "Save Team"}
         

@@ -27,8 +27,8 @@ class Profile(models.Model):
     is_zone_director = models.BooleanField(default=False)
 
     # rider properties
-    fences_division = models.CharField(max_length=20,choices=DIVISION_TYPES[:4])
-    flat_division = models.CharField(max_length=20)
+    fences_division = models.CharField(max_length=20,choices=DIVISION_TYPES[:4],default="none")
+    flat_division = models.CharField(max_length=20,choices=DIVISION_TYPES,default="none")
     points = models.IntegerField(default=0)
 
 class HorseShow(models.Model):

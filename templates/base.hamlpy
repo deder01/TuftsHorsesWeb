@@ -44,9 +44,6 @@
             %a.brand{:href => "#"} Tufts Horses
             - block navbar
               .nav-collapse.collapse
-                %p.navbar-text.pull-right
-                  Logged in as
-                  %a.navbar-link{:href => "#"}= user.username
                 %ul.nav
                   -if user.profile.is_rider
                     %li
@@ -70,6 +67,23 @@
                   -elif user.profile.is_zone_director
                     %li
                       %a{:href => "/zone/{{ user.zone_set.all.0.id }}"}= user.zone_set.all.0.title
+                %ul.nav.pull-right
+                  %li.dropdown
+                    %a.dropdown-toggle{:href => "#", :data-toggle => "dropdown"}
+                      {{ user.username }}
+                      %b.caret
+                    %ul.dropdown-menu{:role => "menu"}
+                      %li
+                        %a{:href => "/myprofile"}
+                          My Profile
+                      %li
+                        %a{:href => "/user/edit"}
+                          Edit
+                      %li.divider
+                      %li
+                        %a{:href => "/logout"}
+                          Logout
+
     .container-fluid
       -block content
     %script{:src => "{{ STATIC_URL}}js/jquerymin.js"}

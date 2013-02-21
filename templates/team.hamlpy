@@ -5,7 +5,7 @@
     .span9.hero-unit
         %h2 {{ team.school }}
         .row
-          %img.thumbnail{:src => "{{STATIC_URL}}img/teams/{{nickname}}/{{nickname}}.png", :style => "margin-bottom: 30px;"}
+          %img.thumbnail{:src => "{{STATIC_URL}}img/teams/{{team.nickname}}/{{teamname}}.png", :style => "margin-bottom: 30px;"}
         .row
           .span2
             %img.thumbnail{:src => "{{STATIC_URL}}img/first.png"}
@@ -23,7 +23,7 @@
                 %dd 3rd
     .span3.well
       %h2 Random Rider
-      %img.thumbnail{:src => "{{ STATIC_URL }}img/teams/{{ nickname }}/roster/david-eder.jpg", :style => "margin-bottom: 15px;"}
+      %img.thumbnail{:src => "{{ STATIC_URL }}img/teams/{{ team.nickname }}/roster/david-eder.jpg", :style => "margin-bottom: 15px;"}
       %p Name: David Eder
       %p Major: Compute Science
       %p Class: Novice
