@@ -45,6 +45,9 @@ def user_login(request):
   if request.method == 'POST':
     username = request.POST['username']
     password = request.POST['password']
+
+    if '@' in username:
+      username = User.objects.get(email=username).username
     user = authenticate(username=username, password=password)
     if user is not None:
       login(request, user)

@@ -4,7 +4,7 @@
   %form{:method => "POST", :action => "/user_login"}
     %h2.form-heading 
       Please sign in
-    %input.input-block-level{:placeholder => "Username", :type => "text", :name => "username"}
+    %input.input-block-level{:placeholder => "Email or Username", :type => "text", :name => "username"}
     %input.input-block-level{:placeholder => "Password", :type => "password", :name => "password"}
     .pull-right
       %label.checkbox{:style => "display:inline;"}
