@@ -17,12 +17,12 @@ from django.forms.models import modelformset_factory
 
 def getTeam(user):
   team = ''
-  if(user.riderTeam.all()):
+  if user.profile.is_rider:
     team = (user.riderTeam.all()[0])
-  elif (user.captainTeam.all()):
-    team = (user.captainTeam.all()[0])
-  else:
+  elif user.profile.is_trainer:
     team = (user.trainerTeam.all()[0])
+  else:
+    return null
   return team
 
 def create_profile(sender, **kw):
@@ -79,7 +79,10 @@ def user_logout(request):
 
 def home(request):
     teamid = str(getTeam(request.user).id)
-    return HttpResponseRedirect('/team/'+teamid)
+    if teamid:
+      return HttpResponseRedirect('/team/'+teamid)
+    else:
+      return HttpResponseRedierct('/region'/request.user.zone.id)
 
 def region(request, regionid):
   team = getTeam(request.user)
@@ -118,7 +121,7 @@ def show(request, showid):
                             context_instance=RequestContext(request, {
                               'show':show,
                               'teams':teams,
-                              'divisions':classes,
+                              'classes':classes,
                               }))
 def zone(request, zoneid):
   team = getTeam(request.user)
