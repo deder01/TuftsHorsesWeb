@@ -226,3 +226,17 @@ def edit_show_team(request,showteamid):
                               'showteam':showteam,
                               }))
 
+def edit_show(request, showid):
+  show = get_object_or_404(HorseShow,id=showid)
+  if request.method == "POST":
+    show_form = ShowForm(team=show.hosting_team,instance=show,data=request.POST)
+    if show_form.is_valid():
+      show.save()
+      return redirect(reverse('horseshow.views.show',args=(show.id,)))
+  else:
+    show_form = ShowForm(team=show.hosting_team, instance=show)
+  return render_to_response('edit_horse_show.hamlpy',
+                            context_instance=RequestContext(request,{
+                              'form':show_form,  
+                            }))
+

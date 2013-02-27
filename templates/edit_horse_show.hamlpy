@@ -1,0 +1,8 @@
+- extends "form_base.hamlpy"
+
+- block form
+    %form{:method => "post"}
+        {{form.as_p}}
+        {% csrf_token %}
+        %input.btn{:name => "submit", :type => "submit", :value => "Save Show"}
+        
