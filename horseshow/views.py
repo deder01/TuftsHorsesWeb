@@ -240,7 +240,7 @@ def edit_show(request, showid):
                               'form':show_form,  
                             }))
 
-def new_class(request, showid):
+def create_classes(request, showid):
   show = get_object_or_404(HorseShow,id=showid)
   if request.method == "POST":
     class_form= ClassForm(show,data=request.POST)

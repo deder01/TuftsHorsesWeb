@@ -58,6 +58,7 @@ class HorseShow(models.Model):
     lng = models.FloatField()
     location = models.CharField(max_length=400)
     title = models.CharField(max_length=100)
+    judge = models.CharField(max_length=100)
     date = models.DateTimeField(default=datetime.now())
     admin = models.ManyToManyField(User)
     hosting_team = models.ForeignKey('Team',null=True)
@@ -124,7 +125,6 @@ class ShowTeam(models.Model):
 
 class Class(models.Model):
     title = models.CharField(max_length=100)
-    judge = models.CharField(max_length=100)
     type = models.CharField(choices=CLASS_TYPES, max_length=20)
     division = models.CharField(choices=DIVISION_TYPES,max_length=20)
     order = models.IntegerField(default=-1)
