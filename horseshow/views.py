@@ -240,3 +240,17 @@ def edit_show(request, showid):
                               'form':show_form,  
                             }))
 
+def new_class(request, showid):
+  show = get_object_or_404(HorseShow,id=showid)
+  if request.method == "POST":
+    class_form= ClassForm(show,data=request.POST)
+    if class_form.is_valid():
+      klass = class_form.save(show)
+      return redirect(reverse('horseshow.views.show',args=(show.id,)))
+  else:
+    class_form= ClassForm(show)
+  return render_to_response('new_class.hamlpy',
+                            context_instance=RequestContext(request,{
+                              'form':class_form,  
+                            }))
+

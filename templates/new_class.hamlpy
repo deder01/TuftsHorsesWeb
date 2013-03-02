@@ -1,0 +1,9 @@
+- extends "form_base.hamlpy"
+
+- block form
+    %form{:method => "post"}
+        %h2.form-heading
+          Add a Class 
+        {{form.as_p}}
+        {% csrf_token %}
+        %input.btn{:name => "submit", :type => "submit", :value => "Create a Class"}
