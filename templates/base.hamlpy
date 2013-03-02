@@ -96,13 +96,13 @@
     :javascript
       $(function() {
         $('.sortable').sortable().bind('sortupdate', function(e, ui) {
-            var divs = $("ul#sortable li")
-            for(var i=0; i<divs.length; i++){
+            var classes= $("ul#sortable li")
+            for(var i=0; i<classes.length; i++){
               var data = JSON.stringify({
                 "order": i
               });                
-              var url = 'http://localhost:5000/api/v1/division/';
-              url = url + divs[i].id;
+              var url = 'http://localhost:5000/api/v1/class/';
+              url = url + classes[i].id;
               url = url + '/';
               $.ajax({
                 url: url,
