@@ -110,7 +110,7 @@ class Rider(models.Model):
       elif self.place > 6:
         return 0
       else:
-        return 7-place
+        return 7 - self.place
 
 class ShowTeam(models.Model):
     team = models.ForeignKey(Team)

@@ -19,7 +19,7 @@ class HorseResource(ModelResource):
 class HorseShowResource(ModelResource):
     admin = fields.ToManyField(UserResource,'admin',full=True)
     hosting_team = fields.ForeignKey('horseshow.api.TeamResource','hosting_team',null=True)
-    divisions = fields.ToManyField('horseshow.api.DivisionResource','divisions',full=True, null=True)
+    classes = fields.ToManyField('horseshow.api.ClassResource','classes',full=True, null=True)
     teams = fields.ToManyField('horseshow.api.ShowTeamResource','teams',full=True, null=True)
     class Meta:
         queryset = HorseShow.objects.all()
@@ -59,7 +59,7 @@ class TrainerResource(ModelResource):
         resource_name = 'trainer'"""
 
 class RiderResource(ModelResource):
-    details = fields.ForeignKey(UserResource,'details',full=True)
+    details = fields.ForeignKey(UserResource,'user',full=True)
     horse = fields.ForeignKey('horseshow.api.HorseResource','horse',full=True)
     #divisions = fields.ForeignKey('horseshow.api.DivisionResource','division_set')
     class Meta:
