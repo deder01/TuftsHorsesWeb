@@ -82,7 +82,7 @@ class ClassForm(forms.ModelForm):
         return klass
     class Meta:
         model = Class
-        fields = ('title','judge','type','division','eventLength')
+        fields = ('title','type','division','eventLength')
 
 class ShowForm(forms.ModelForm):
     def __init__(self,team,*args,**kwargs):
@@ -101,4 +101,4 @@ class ShowForm(forms.ModelForm):
         return horseshow
     class Meta:
         model = HorseShow
-        fields = ('title','date','barn','location','lat','lng','maxriders')
+        fields = ('title','date','judge','barn','location','lat','lng','maxriders')
