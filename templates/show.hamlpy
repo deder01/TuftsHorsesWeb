@@ -22,10 +22,10 @@
             .span5
               %h1 Schedule
               %ul#sortable.handles.list.sortable
-                -for d in  divisions
+                -for d in  classes
                   %li{:id => "{{ d.id }}", :order => "{{ d.order }}"}
                     %span ::
-                    %a{:href => "show/divisions/{{ d.id }}"}= d.title
+                    %a{:href => "show/classes/{{ d.id }}"}= d.title
             .span3
               %h3 Last Class:
               %h3 3a-Advanced Walk Trot Cantor

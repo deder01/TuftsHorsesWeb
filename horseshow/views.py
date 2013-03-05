@@ -19,12 +19,12 @@ from django.http import Http404
 
 def getTeam(user):
   team = ''
-  if(user.riderTeam.all()):
+  if user.profile.is_rider:
     team = (user.riderTeam.all()[0])
-  elif (user.captainTeam.all()):
-    team = (user.captainTeam.all()[0])
-  else:
+  elif user.profile.is_trainer:
     team = (user.trainerTeam.all()[0])
+  else:
+    return null
   return team
 
 def create_profile(sender, **kw):
@@ -47,6 +47,9 @@ def user_login(request):
   if request.method == 'POST':
     username = request.POST['username']
     password = request.POST['password']
+
+    if '@' in username:
+      username = User.objects.get(email=username).username
     user = authenticate(username=username, password=password)
     if user is not None:
       login(request, user)
@@ -78,7 +81,10 @@ def user_logout(request):
 
 def home(request):
     teamid = str(getTeam(request.user).id)
-    return HttpResponseRedirect('/team/'+teamid)
+    if teamid:
+      return HttpResponseRedirect('/team/'+teamid)
+    else:
+      return HttpResponseRedierct('/region'/request.user.zone.id)
 
 def region(request, regionid):
   team = getTeam(request.user)
@@ -117,7 +123,7 @@ def show(request, showid):
                             context_instance=RequestContext(request, {
                               'show':show,
                               'teams':teams,
-                              'divisions':classes,
+                              'classes':classes,
                               }))
 def zone(request, zoneid):
   team = getTeam(request.user)
@@ -240,4 +246,32 @@ def edit_attendance(request,uuid):
                             context_instance=RequestContext(request,{
                               'form':attendance_form,
                               }))
+
+def edit_show(request, showid):
+  show = get_object_or_404(HorseShow,id=showid)
+  if request.method == "POST":
+    show_form = ShowForm(team=show.hosting_team,instance=show,data=request.POST)
+    if show_form.is_valid():
+      show.save()
+      return redirect(reverse('horseshow.views.show',args=(show.id,)))
+  else:
+    show_form = ShowForm(team=show.hosting_team, instance=show)
+  return render_to_response('edit_horse_show.hamlpy',
+                            context_instance=RequestContext(request,{
+                              'form':show_form,  
+                            }))
+
+def create_classes(request, showid):
+  show = get_object_or_404(HorseShow,id=showid)
+  if request.method == "POST":
+    class_form= ClassForm(show,data=request.POST)
+    if class_form.is_valid():
+      klass = class_form.save(show)
+      return redirect(reverse('horseshow.views.show',args=(show.id,)))
+  else:
+    class_form= ClassForm(show)
+  return render_to_response('new_class.hamlpy',
+                            context_instance=RequestContext(request,{
+                              'form':class_form,  
+                            }))
 

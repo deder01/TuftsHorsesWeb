@@ -1,12 +1,10 @@
-- extends "base.hamlpy"
-
-- block content
-    :css
+- extends "form_base.hamlpy"
+-block content
+  :css
         .container-fluid, body {
             background-color: #f5f5f5;
         }
         form {
-          max-width: 300px;
           padding: 19px 29px 29px;
           margin: 0 auto 20px;
           background-color: #fff;
@@ -18,16 +16,17 @@
              -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
                   box-shadow: 0 1px 2px rgba(0,0,0,.05);
         }
-        form form-heading,
-        form .checkbox {
-          margin-bottom: 10px;
-        }   
-        form input[type="text"],
-        form input[type="password"] {
-          font-size: 16px;
-          height: auto;
-          margin-bottom: 15px;
-          padding: 7px 9px;
-        }
-    - block form
-        
+
+        form p { display:inline}
+        form p label{ display:inline}
+        form p input,select{ max-width:150px }
+
+  .row-fluid
+    .span3
+    .span6
+      - block form
+          %form{:method => "post"}
+              {{form.as_p}}
+              {% csrf_token %}
+              %input.btn{:name => "submit", :type => "submit", :value => "Create Show"}
+    .span3

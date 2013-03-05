@@ -36,7 +36,11 @@ class TeamForm(forms.ModelForm):
 class ShowForm(forms.ModelForm):
     def __init__(self,team,*args,**kwargs):
         super(ShowForm,self).__init__(*args,**kwargs)
-        self.fields['date'] = forms.SplitDateTimeField(input_date_formats=["%m/%d/%Y"],input_time_formats=["%I:%M %p"])
+        self.fields['date'] = forms.SplitDateTimeField(input_date_formats=["%m/%d/%Y"],input_time_formats=["%I:%M\
+            %p"],error_messages={'invalid_time':'Enter a valid time (7:00 AM, 12:00 PM, 7:00 PM)',
+                                 'invalid_date': 'Enter a vlid date (03/02/2013)'
+                                 })
+
         self.fields['date'].widget = SplitDateTimeWidget(date_format="%m/%d/%Y",time_format="%I:%M %p",attrs={'class':'datepicker-default'})
         self.team = team
 
@@ -81,3 +85,16 @@ class AttendanceForm(forms.ModelForm):
         model = ShowInvitation
         fields = ('status',)
         
+        
+class ClassForm(forms.ModelForm):
+    def __init__(self,show,*args,**kwargs):
+        super(ClassForm,self).__init__(*args,**kwargs)
+ 
+    def save(self,show):
+        klass = Class.objects.create(**self.cleaned_data)
+        klass.horseshow_set.add(show)
+        klass.save()
+        return klass
+    class Meta:
+        model = Class
+        fields = ('title','type','division','eventLength')
