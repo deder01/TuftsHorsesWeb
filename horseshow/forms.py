@@ -13,7 +13,6 @@ class DivisionForm(forms.ModelForm):
         self.fields['fences_division'].widget.attrs['class'] = 'span1'
         self.fields['flat_division'].widget.attrs['class'] = 'span1'
 
-
 class UserForm(forms.ModelForm):
     class Meta:
         model = User
@@ -63,7 +62,22 @@ class RosterForm(forms.Form):
         self.showteam.rider_set.all().delete()
         for user in self.cleaned_data['fences_riders']:
             Rider.objects.create(user=user,showteam=self.showteam,class_type="fences").save()
+            ShowInvitation.objects.create(rider=user,showteam=self.showteam)
         for user in self.cleaned_data['flat_riders']:
             Rider.objects.create(user=user,showteam=self.showteam,class_type="flat").save()
+            ShowInvitation.objects.create(rider=user,showteam=self.showteam)
         return self.showteam
+
+class AttendanceForm(forms.ModelForm):
+    def save(self):
+        invite = super(AttendanceForm,self).save()
+        invite.save()
+        if invite.status == 0:
+            Rider.objects.filter(showteam=invite.showteam,user=invite.rider).delete()
+            # TODO: Notify trainers that a chosen rider cannot compete
+        return invite
+
+    class Meta:
+        model = ShowInvitation
+        fields = ('status',)
         

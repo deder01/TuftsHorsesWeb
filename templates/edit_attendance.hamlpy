@@ -1,0 +1,9 @@
+- extends "form_base.hamlpy"
+
+- block form
+     %form{:method => "post"}
+        %h2.form-heading
+            RSVP
+        {{form.as_p}}
+        {% csrf_token %}
+        %input.btn.btn-primary{:name => "submit", :type => "submit", :value => "Update"}

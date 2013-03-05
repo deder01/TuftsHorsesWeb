@@ -96,6 +96,14 @@ class CheckboxInput(SubWidget):
             final_attrs['checked'] = 'checked'
         return mark_safe(u'<input%s />' % flatatt(final_attrs))
 
+    def disabled_tag(self):
+        if 'id' in self.attrs:
+            self.attrs['id'] = '%s_%s' % (self.attrs['id'], self.index)
+        final_attrs = dict(self.attrs, type='checkbox', name=self.name, value=self.choice_value,disabled=True)
+        if self.is_checked():
+            final_attrs['checked'] = 'checked'
+        return mark_safe(u'<input%s />' % flatatt(final_attrs))
+
 class CheckboxRenderer(StrAndUnicode):
     def __init__(self, name, value, attrs, choices):
         self.name, self.value, self.attrs = name, value, attrs

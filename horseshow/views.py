@@ -14,6 +14,8 @@ from django.core.urlresolvers import reverse
 from django.contrib.contenttypes.models import ContentType
 from forms import *
 from django.forms.models import modelformset_factory
+from django.http import Http404
+
 
 def getTeam(user):
   team = ''
@@ -127,17 +129,21 @@ def zone(request, zoneid):
 
 def edit_team(request, teamid):
   team = get_object_or_404(Team,id=teamid)
-  DivisionFormSet = modelformset_factory(Profile,extra=0,form=DivisionForm)
-  if request.method == "POST":
-    teamform = TeamForm(instance=team,data=request.POST)
+  if not request.user in team.trainers.all() or request.user.is_staff: # check permissions
+    raise Http404 # should be 403
+  DivisionFormSet = modelformset_factory(Profile,extra=0,form=DivisionForm) # generate formset class based on model and form
+  if request.method == "POST": # see if user has submitted a form
+    teamform = TeamForm(instance=team,data=request.POST) # generate teamform from team and POST data
+    # generate form set from POST data and queryset (riders on team)
     division_form_set = DivisionFormSet(request.POST,queryset=Profile.objects.filter(user__in=team.riders.all()))
-    if teamform.is_valid():
-      teamform.save()
-      if division_form_set.is_valid():
-        division_form_set.save()
+    if teamform.is_valid(): # validate team form
+      teamform.save() # save team model
+      if division_form_set.is_valid(): # validate formset
+        division_form_set.save() # update all riders on team
         return redirect(reverse('horseshow.views.team',args=(teamid)))
   else:
-    teamform = TeamForm(instance=team)
+    teamform = TeamForm(instance=team) # create new team form from team model
+    # create new formset from queryset
     division_form_set = DivisionFormSet(queryset=Profile.objects.filter(user__in=team.riders.all()))
   return render_to_response('edit_team.hamlpy',
                             context_instance=RequestContext(request,{
@@ -213,10 +219,25 @@ def edit_show_team(request,showteamid):
   else:
     rosterform = RosterForm(showteam,initial={"fences_riders":fences_riders,"flat_riders":flat_riders})
   zipped_fields = zip(showteam.team.riders.all(),*[boundField for boundField in rosterform])
+  non_attending_riders = map(lambda x:x.rider,showteam.showinvitation_set.filter(status=0))
   return render_to_response('edit_roster.hamlpy',
                             context_instance=RequestContext(request,{
                               'form':rosterform,
                               'zipped_fields':zipped_fields,
                               'showteam':showteam,
+                              'non_attending_riders':non_attending_riders,
+                              }))
+
+def edit_attendance(request,uuid):
+  invite = get_object_or_404(ShowInvitation,uuid=uuid)
+  if request.method == "POST":
+    attendance_form = AttendanceForm(instance=invite,data=request.POST)
+    if attendance_form.is_valid():
+      attendance_form.save()
+  else:
+    attendance_form = AttendanceForm(instance=invite)
+  return render_to_response('edit_attendance.hamlpy',
+                            context_instance=RequestContext(request,{
+                              'form':attendance_form,
                               }))
 

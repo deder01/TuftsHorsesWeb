@@ -1,0 +1,3 @@
+Hi {{username}},
+    Your coach wants you to participate in the {{horseshow.name}} at {{horseshow.location}} on {{horseshow.date|date:"l, F j, Y"}}.
+    You can set your attendance status at {{root_url}}{% url horseshow.views.edit_attendance uuid=uuid %} or view information about the event at {{root_url}}{% url horseshow.views.show showid=horseshow.id %}

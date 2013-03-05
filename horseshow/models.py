@@ -7,7 +7,7 @@ from copy import deepcopy
 from django.template.loader import get_template
 from django.template import Context
 from django.core.mail import send_mail
-
+from uuid import uuid1
 
 DIVISION_TYPES = (
     ("none","None"),
@@ -121,6 +121,36 @@ class ShowTeam(models.Model):
       for r in Rider.objects.filter(showteam=self):
         p += r.points()
       return p
+
+INVITATION_STATUSES = (
+    (-1, "Unanswered"),
+    (1, "Attending"),
+    (0, "Not Attending"),
+)
+
+class ShowInvitationManager(models.Manager):
+    def create(self,*args,**kwargs):
+        try:
+            invite = self.get(rider=kwargs['rider'],showteam=kwargs['showteam'])
+        except self.model.DoesNotExist:
+            invite = super(ShowInvitationManager,self).create(*args,**kwargs)
+            rider = kwargs['rider']
+            showteam = kwargs['showteam']
+            show = showteam.horseshow_set.get()
+            subject = "Your coach wants you to participate in a show"
+            email_template = get_template('horseshow/requestrider.txt')
+            d = Context({'username':rider.username, 'horseshow':show,'showteam':showteam,'root_url':settings.ROOT_URL,'uuid':invite.uuid})
+            message = email_template.render(d)
+            send_mail(subject,message,"invitation@tuftshorses.herokuapp.com",[rider.email])
+        return invite
+
+class ShowInvitation(models.Model):
+    showteam = models.ForeignKey(ShowTeam)
+    rider = models.ForeignKey(User)
+    status = models.IntegerField(choices=INVITATION_STATUSES,default=-1)
+    uuid = models.CharField(max_length=100,default=lambda:uuid1().hex)
+
+    objects = ShowInvitationManager()
 
 class Class(models.Model):
     title = models.CharField(max_length=100)

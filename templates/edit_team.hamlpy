@@ -24,6 +24,8 @@
                     - for field in form
                         %td
                             {{ field }}
+        %a{:href => "{% url invitations.views.send_invite %}"} Invite more riders
+        %br
         {% csrf_token %}
         %input.btn.btn-primary{:name => "submit", :type => "submit", :value => "Save Team"}
         

@@ -22,10 +22,26 @@
             - for rider, flatbox, fencebox in zipped_fields
                 %tr
                     %td
-                        {{rider.first_name}} {{rider.last_name}}
-                    %td
-                        {{flatbox.tag}}
-                    %td 
-                        {{fencebox.tag}}
+                        - if rider in non_attending_riders
+                            %s
+                                {{rider.first_name}} {{rider.last_name}}
+                        - else
+                            {{rider.first_name}} {{rider.last_name}}
+                    - if rider in non_attending_riders
+                        %td
+                            {{flatbox.disabled_tag}}
+                        %td 
+                            {{fencebox.disabled_tag}}
+                    - else 
+                        %td
+                            - if rider.profile.flat_division != "none"
+                                {{flatbox.tag}}
+                            - else 
+                                {{flatbox.disabled_tag}}
+                        %td
+                            - if rider.profile.fences_division != "none"
+                                {{fencebox.tag}}
+                            - else 
+                                {{fencebox.disabled_tag}}
         {% csrf_token %}
         %input.btn.btn-primary{:name => "submit", :type => "submit", :value => "Update Roster"}
