@@ -15,9 +15,9 @@
           -for s in shows
             %tr
               %td
-                %a{:href => "/show/{{ s.id }}"}= s.hostingTeam.nickname
-              %td
                 {{ s.date.month }}/{{ s.date.day }}/{{ s.date.year }}
+              %td
+                %a{:href => "/show/{{ s.id }}"}= s.hosting_team.nickname
              %td= s.barn
         .span4
           %table.table.table-bordered

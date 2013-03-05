@@ -47,6 +47,8 @@ class ShowForm(forms.ModelForm):
     def save(self):
         self.cleaned_data['hosting_team'] = self.team
         horseshow = HorseShow.objects.create(**self.cleaned_data)
+        horseshow.region = self.team.region
+        horseshow.save()
         return horseshow
     class Meta:
         model = HorseShow
