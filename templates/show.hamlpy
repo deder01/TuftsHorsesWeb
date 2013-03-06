@@ -9,6 +9,9 @@
             .pull-right
               %a{:href => "{% url horseshow.views.edit_show_team showteamid=showteam.id %}", :style => "font-size:27px;"}
                  Edit Roster
+              - if user in show.hosting_team.trainers.all
+                %a{:href => "{% url horseshow.views.edit_show showid=show.id %}", :style => "font-size:27px;"}
+                  Edit Show
           %h3 {{show.date|date:"F jS, Y \a\t f A"}}
           %h4 
             Hosted by {{ show.hosting_team.school }} at 
@@ -20,15 +23,15 @@
               %tr
                 %th School
                 %th Points (without drop)
-              -for t in teams 
+              - for t in teams 
                 %tr
                   %td
-                    %a{:href => "/team/{{ t.team.id }}"}= t.team.school
+                    %a{:href => "{% url horseshow.views.team teamid=t.team.id %}"}= t.team.school
                   %td 0
           .span4{:style => "text-align:center"}
             %h3 Schedule
             %ul#sortable.handles.list.sortable
-              -for d in  classes
+              - for d in  classes
                 %li{:id => "{{ d.id }}", :order => "{{ d.order }}"}
                   %span ::
                   %a{:href => "show/classes/{{ d.id }}"}= d.title
