@@ -1,6 +1,12 @@
 - extends "base.hamlpy"
 
 -block content
+  -if team in user.trainerTeam.all
+    .row-fluid
+       %h1
+        .pull-right
+          %a{:href => "{% url horseshow.views.edit_team teamid=team.id %}", :style => "font-size:27px;"}  
+            Edit Team
   .row-fluid
     .span9.hero-unit
         %h2 {{ team.school }}
